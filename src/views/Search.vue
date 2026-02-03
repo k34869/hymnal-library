@@ -24,8 +24,8 @@
 <script setup>
 import 'mdui/components/chip.js';
 import 'mdui/components/tooltip.js';
-import Input from '~/components/Input.vue';
-import FsList from '~/components/FsList.vue';
+import Input from '~/components/common/Input.vue';
+import FsList from '~/components/business/FsList.vue';
 import { ref, watch, onActivated, onDeactivated } from 'vue'
 import { useRouter } from 'vue-router';
 import { useSearch, database } from '~/hooks/useSearch';

@@ -2,7 +2,7 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import { dialogStore } from "~/stores/dialog";
 import { snackbar } from "mdui";
-import addToFavoriteDialog from "~/components/AddToFavoriteDialog.vue";
+import addToFavoriteDialog from "~/components/business/dialog/AddToFavoriteDialog.vue";
 
 export const useFavorites = defineStore(
   "favorites",
@@ -103,7 +103,7 @@ export const useFavorites = defineStore(
         const fIndex = find(inFavoriteName.value);
         if (
           confirm(
-            `是否删除 “${favorites.value.list[fIndex].list[index].name}” ?`
+            `是否删除 “${favorites.value.list[fIndex].list[index].name}” ?`,
           )
         ) {
           favorites.value.list[fIndex].list.splice(index, 1);
@@ -126,5 +126,5 @@ export const useFavorites = defineStore(
   },
   {
     persist: true,
-  }
+  },
 );

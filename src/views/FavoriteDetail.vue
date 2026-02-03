@@ -13,7 +13,7 @@ import { reactive } from 'vue'
 import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 import 'mdui/components/button-icon.js';
-import FsList from '~/components/FsList.vue';
+import FsList from '~/components/business/FsList.vue';
 import { useFavorites } from '~/stores/favorites';
 import { useSaveScrollPosition } from '~/hooks/useSaveScrollPosition';
 

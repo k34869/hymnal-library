@@ -11,8 +11,8 @@
 </template>
 
 <script setup>
-import FsList from '~/components/FsList.vue';
-import PathNavigation from '~/components/PathNavigation.vue';
+import FsList from '~/components/business/FsList.vue';
+import PathNavigation from '~/components/business/PathNavigation.vue';
 import { useRouter } from 'vue-router';
 import { useLoadFsList } from '~/hooks/useLoadFsList';
 import { useSettings } from "~/stores/settings";

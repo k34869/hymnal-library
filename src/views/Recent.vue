@@ -12,7 +12,7 @@
 
 <script setup>
 import 'mdui/components/button-icon.js';
-import FsList from '~/components/FsList.vue';
+import FsList from '~/components/business/FsList.vue';
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRecent } from '~/stores/recent';

@@ -29,10 +29,10 @@
 </template>
 
 <script setup>
-import TopBar from './components/TopBar.vue';
-import BottomBar from './components/BottomBar.vue';
-import SideBar from './components/SideBar.vue';
-import Dialog from './components/Dialog.vue';
+import TopBar from './components/layout/TopBar.vue';
+import BottomBar from './components/layout/BottomBar.vue';
+import SideBar from './components/layout/SideBar.vue';
+import Dialog from './components/common/Dialog.vue';
 import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router';
 import { dialogStore } from '~/stores/dialog';
@@ -55,15 +55,17 @@ watch(() => route.name, (value) => {
 })
 
 // 安卓设备输入法弹出布局适配
-let originHeight = document.documentElement.clientHeight || document.body.clientHeight;
+let originHeight = document.documentElement.clientHeight
 let orientation = window.matchMedia("(orientation: landscape)").matches
 window.addEventListener('resize', () => {
-  const resizeHeight = document.documentElement.clientHeight || document.body.clientHeight;
+  const resizeHeight = document.documentElement.clientHeight
   // 屏幕方向改变时不判断
   if (window.matchMedia("(orientation: landscape)").matches !== orientation) {
+    originHeight = resizeHeight;
     orientation = window.matchMedia("(orientation: landscape)").matches
     return
   };
+
   if (originHeight <= resizeHeight) {
     // Android 键盘收起后操作
     isHideBottomBar.value = false
@@ -71,7 +73,6 @@ window.addEventListener('resize', () => {
     // Android 键盘弹起后操作
     isHideBottomBar.value = true
   }
-  originHeight = resizeHeight;
 }, false);
 </script>
 

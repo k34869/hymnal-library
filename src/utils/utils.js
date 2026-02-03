@@ -3,7 +3,7 @@ export function uniqueRandoms(min, max, count) {
   const rangeSize = max - min + 1;
   if (count > rangeSize)
     throw new Error(
-      `无法生成 ${count} 个不重复随机数，因为范围大小只有 ${rangeSize}`
+      `无法生成 ${count} 个不重复随机数，因为范围大小只有 ${rangeSize}`,
     );
 
   const arr = Array.from({ length: rangeSize }, (_, i) => min + i);

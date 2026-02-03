@@ -117,7 +117,7 @@ const gridOptions = [
 ]
 
 const repairSN = () => {
-  const t = ['唱诗人']
+  const t = ['唱诗人', '青年诗歌', '新歌颂咏', '儿童诗歌']
 
   if (t.includes(inCategory.value)) {
     return toNumber.value.padStart(3, '0')
@@ -160,6 +160,8 @@ const action = (option) => {
     isAdditional.value = true
     inPrefix = content
   } else if (type === 'submit') {
+    console.log(`${inPrefix}${repairSN()}`);
+
     const res = search(`${inPrefix}${repairSN()}`, ['name'], false)
     const results = res.filter(item => item.category === inCategory.value)
 

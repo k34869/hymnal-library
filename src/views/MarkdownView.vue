@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header">
       <mdui-button-icon icon='arrow_back' @click="$router.back"></mdui-button-icon>
-      <span class="title">{{ directory }}</span>
+      <span class="title line-hide-1">{{ directory }}</span>
       <mdui-dropdown>
         <mdui-button-icon slot="trigger" icon="more_vert" class="more"></mdui-button-icon>
         <mdui-menu>
@@ -49,7 +49,7 @@ const share = () => {
   top: 0;
   padding: calc(var(--safe-area-inset-top) + 5px) 8px 5px 8px;
   box-shadow: var(--mdui-elevation-level2);
-  background-color: rgb(var(--mdui-color-surface));
+  background-color: rgb(var(--mdui-color-surface-container));
   z-index: 1;
 }
 

@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import FsList from '~/components/FsList.vue';
+import FsList from '~/components/business/FsList.vue';
 import { storeToRefs } from 'pinia';
 import { useFavorites } from '~/stores/favorites';
 import { useSaveScrollPosition } from '~/hooks/useSaveScrollPosition';

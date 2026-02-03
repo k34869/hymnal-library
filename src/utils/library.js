@@ -3,7 +3,7 @@ import { snackbar } from "mdui/functions/snackbar.js";
 
 export async function getFile(path) {
   const promise = CapacitorHttp.post({
-    url: `http://114.66.61.131:6042/api/fs/get`,
+    url: `https://mfbt5siz.cn-nb1.rainapp.top/api/fs/get`,
     headers: {
       accept: "application/json, text/plain, */*",
       "content-type": "application/json",
@@ -24,13 +24,13 @@ export async function getFile(path) {
 
 export async function getFsList(path) {
   return fetch(`/library/${path ? path + "/" : ""}map.json`).then((res) =>
-    res.json()
+    res.json(),
   );
 }
 
 export async function getMarkdown(path) {
   return fetch(`/library/${path ? path + "/" : ""}index.md`).then((res) =>
-    res.text()
+    res.text(),
   );
 }
 
@@ -38,15 +38,14 @@ export async function getDatabase() {
   return fetch(`/library/db.json`).then((res) => res.json());
 }
 
-export function filterMark(string) {
-  return string.replace(/<span class="mark">|<\/span>/g, "");
-}
+export const filterMark = (string) =>
+  string.replace(/<span class="mark">|<\/span>/g, "");
 
 export function getPageItemLength(itemHeight) {
   return parseInt(
     document.getElementById("main").getBoundingClientRect().height /
       itemHeight +
-      5
+      5,
   );
 }
 

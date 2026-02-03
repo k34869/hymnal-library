@@ -12,7 +12,7 @@
             <mdui-icon name='dark_mode' class="icon"></mdui-icon>
             <div class="name font-bold-200">夜间模式</div>
           </div>
-          <mdui-switch @change="setDark($event, 'isDark')" :checked="isDark"></mdui-switch>
+          <mdui-switch @change="isDark = $event.target.checked" :checked="isDark"></mdui-switch>
         </div>
       </mdui-list-item>
 
@@ -22,7 +22,7 @@
             <mdui-icon name='dark_mode' class="icon"></mdui-icon>
             <div class="name font-bold-200">夜间模式跟随系统</div>
           </div>
-          <mdui-switch @change="setDark($event, 'isDarkWithSystem')" :checked="isDarkWithSystem"></mdui-switch>
+          <mdui-switch @change="isDarkWithSystem = $event.target.checked" :checked="isDarkWithSystem"></mdui-switch>
         </div>
       </mdui-list-item>
 
@@ -32,7 +32,7 @@
             <mdui-icon name='smartphone' class="icon"></mdui-icon>
             <div class="name font-bold-200">屏幕常亮</div>
           </div>
-          <mdui-switch @change="toggleScreenAlways" :checked="isScreenAlways"></mdui-switch>
+          <mdui-switch @change="isScreenAlways = $event.target.checked" :checked="isScreenAlways"></mdui-switch>
         </div>
       </mdui-list-item>
 
@@ -73,8 +73,8 @@
 import 'mdui/components/list.js';
 import 'mdui/components/list-item.js';
 import 'mdui/components/switch.js';
-import AboutDialog from '~/components/AboutDialog.vue';
-import SelectSetupPageDialog from '~/components/SelectSetupPageDialog.vue';
+import AboutDialog from '~/components/business/dialog/AboutDialog.vue';
+import SelectSetupPageDialog from '~/components/business/dialog/SelectSetupPageDialog.vue';
 import { storeToRefs } from 'pinia'
 import { useSettings } from '~/stores/settings';
 import { dialogStore } from '~/stores/dialog';
@@ -83,18 +83,7 @@ defineOptions({
   name: '设置'
 })
 
-const settingsStore = useSettings()
-const { isDark, isDarkWithSystem, isScreenAlways, setupPageName } = storeToRefs(settingsStore)
-
-const setDark = (event, type) => {
-  settingsStore[type] = event.target.checked
-  settingsStore.setTheme()
-}
-
-const toggleScreenAlways = (event) => {
-  isScreenAlways.value = event.target.checked
-  settingsStore.setScreenAlways()
-}
+const { isDark, isDarkWithSystem, isScreenAlways, setupPageName } = storeToRefs(useSettings())
 
 const openSelectSetupPage = () => {
   dialogStore.title = '选择启动页面?'

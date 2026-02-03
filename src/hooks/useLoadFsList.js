@@ -15,6 +15,10 @@ export function useLoadFsList() {
   const paginationFslist = computed(() => ({
     type: fsList.value.type,
     list: fsList.value.list.slice(0, pageItemLength * pageNo.value),
+    refe: {
+      type: fsList.value.type,
+      list: fsList.value.list,
+    },
   }));
   const isLoading = ref(false);
   const isShowBottomLoading = ref(false);
@@ -50,6 +54,10 @@ export function useLoadFsList() {
           $pageNavigation.scrollTo({ left: $pageNavigation.scrollWidth });
         }, 0);
         if (stackHistory[0].path === pathArray.value.join("/")) {
+          pageNo.value = getPageNumber(
+            stackHistory[0].list.list.length,
+            pageItemLength,
+          );
           fsList.value = stackHistory[0].list;
           isLoading.value = true;
           setTimeout(() => {
@@ -61,7 +69,7 @@ export function useLoadFsList() {
         } else {
           loadFsList();
         }
-      }
+      },
     );
     viewPortIn(
       [document.querySelector(".fs-list-bottom-loading")],
@@ -79,13 +87,11 @@ export function useLoadFsList() {
         root: null,
         rootMargin: "0px",
         threshold: 0,
-      }
+      },
     );
   });
 
-  onBeforeRouteLeave(() => {
-    stop();
-  });
+  onBeforeRouteLeave(() => stop());
 
   return {
     fsList,

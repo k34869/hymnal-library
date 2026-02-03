@@ -1,4 +1,4 @@
-import { ref, computed } from "vue";
+import { ref, computed, watchEffect } from "vue";
 import { defineStore } from "pinia";
 import { KeepAwake } from "@capacitor-community/keep-awake";
 import { SafeArea } from "@capacitor-community/safe-area";
@@ -10,17 +10,13 @@ export const useSettings = defineStore(
     const isDarkWithSystem = ref(true);
     const isScreenAlways = ref(true);
     const setupPageName = ref("资料库");
-    const mduiThemeName = computed(() => {
-      if (isDarkWithSystem.value) {
-        return "mdui-theme-auto";
-      } else {
-        if (isDark.value) {
-          return "mdui-theme-dark";
-        } else {
-          return "mdui-theme-light";
-        }
-      }
-    });
+    const mduiThemeName = computed(() =>
+      isDarkWithSystem.value
+        ? "mdui-theme-auto"
+        : isDark.value
+        ? "mdui-theme-dark"
+        : "mdui-theme-light",
+    );
 
     async function setSafeArea(theme) {
       await SafeArea.enable({
@@ -34,49 +30,33 @@ export const useSettings = defineStore(
     }
 
     function initSafeArea() {
-      const inTheme = mduiThemeName.value.replace("mdui-theme-", "");
-
-      if (inTheme === "auto") {
-        setSafeArea(
-          window.matchMedia("(prefers-color-scheme: dark)").matches === "dark"
-            ? "light"
-            : "dark"
-        );
-      } else {
-        setSafeArea(inTheme);
-      }
+      let inTheme = mduiThemeName.value.replace("mdui-theme-", "");
+      inTheme =
+        inTheme === "auto"
+          ? window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light"
+          : inTheme;
+      setSafeArea(inTheme);
     }
 
-    const setTheme = () => {
+    watchEffect(() =>
+      isScreenAlways.value ? KeepAwake.keepAwake() : KeepAwake.allowSleep(),
+    );
+
+    watchEffect(() => {
       document.documentElement.setAttribute("class", mduiThemeName.value);
       initSafeArea();
-    };
-
-    const setScreenAlways = () => {
-      if (isScreenAlways.value) {
-        KeepAwake.keepAwake();
-      } else {
-        KeepAwake.allowSleep();
-      }
-    };
-
-    const initSettings = () => {
-      setTheme();
-      setScreenAlways();
-      initSafeArea();
-    };
+    });
 
     return {
       isDark,
       isDarkWithSystem,
       isScreenAlways,
       setupPageName,
-      setTheme,
-      setScreenAlways,
-      initSettings,
     };
   },
   {
     persist: true,
-  }
+  },
 );
