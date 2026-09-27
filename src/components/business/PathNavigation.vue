@@ -35,9 +35,7 @@ const navigationTo = (navNum) => {
   }
 }
 
-onActivated(() => {
-  $pageNavigation.value.scrollTo({ left: $pageNavigation.value.scrollWidth })
-})
+onActivated(() => $pageNavigation.value.scrollTo({ left: $pageNavigation.value.scrollWidth }))
 </script>
 
 <style scoped>

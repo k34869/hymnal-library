@@ -10,6 +10,8 @@ mp3
 
 <audio src="./audio-3.mp3" controls preload="none" controlsList="nodownload"></audio>
 
+![./0](0)
+
 ![1.jpg](./1.jpg)
 
 ![2.jpg](./2.jpg)

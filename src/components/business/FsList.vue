@@ -5,7 +5,7 @@
       <p>什么都没有?</p>
     </div>
     <template v-else>
-      <mdui-list-item v-for="(item, index) in data.list">
+      <mdui-list-item v-for="(item, index) in data.list" @contextmenu="openDropdown(index)">
         <div class="fs-list-item" slot="custom" @click="open(item)">
           <mdui-icon :name="item.type ? iconMap[item.type] : iconMap[data.type]"></mdui-icon>
           <div class="fs-list-content">
@@ -15,14 +15,15 @@
               v-html="data.type === 'map-favorite' ? `${item.list.length} 项` : item.description"></div>
           </div>
           <mdui-dropdown v-if="item.type ?? data.type !== 'map-folder'" @click.stop>
-            <mdui-button-icon slot="trigger" icon="more_vert"></mdui-button-icon>
+            <mdui-button-icon ref="dropdownTrigger" slot="trigger" icon="more_vert"></mdui-button-icon>
             <mdui-menu>
               <mdui-menu-item @click="open(item)">打开</mdui-menu-item>
-              <mdui-menu-item v-if="auth(['map-favorite'])" @click="share(item)">分享</mdui-menu-item>
-              <mdui-menu-item v-if="auth(['map-favorite'])" @click="addToFavorite(item)">添加到收藏夹</mdui-menu-item>
-              <mdui-menu-item v-if="auth(['map-markdown', 'map-folder'], item.type ?? data.type)"
+              <mdui-menu-item v-if="$route.name !== '收藏'" @click="share(item)">分享</mdui-menu-item>
+              <mdui-menu-item v-if="disable(['map-hyper-link'], item.type, ['收藏'])" @click="addToFavorite(item)">添加到收藏夹</mdui-menu-item>
+              <mdui-menu-item v-if="$route.name === '收藏'" @click="rename(index)">重命名</mdui-menu-item>
+              <mdui-menu-item v-if="disable(['map-markdown', 'map-folder', 'map-hyper-link'], item.type, ['最近'])"
                 @click="deleteAction(item.name, index)">删除</mdui-menu-item>
-              <mdui-menu-item v-if="auth(['map-favorite'])" @click="openDetail(item)">详细信息</mdui-menu-item>
+              <mdui-menu-item v-if="disable(['map-hyper-link'], item.type, ['收藏'])" @click="openDetail(item)">详细信息</mdui-menu-item>
             </mdui-menu>
           </mdui-dropdown>
         </div>
@@ -41,6 +42,7 @@ import 'mdui/components/button-icon.js';
 import 'mdui/components/dropdown.js';
 import 'mdui/components/menu.js';
 import 'mdui/components/menu-item.js';
+import { useTemplateRef } from 'vue';
 import { useRouter, useRoute, } from 'vue-router';
 import { Share } from '@capacitor/share'
 import { dialogStore } from '~/stores/dialog';
@@ -62,7 +64,8 @@ const router = useRouter()
 const route = useRoute()
 const recentStore = useRecent()
 const favoritesStore = useFavorites()
-const { confirmRemove, promptAddItem, removeItem } = favoritesStore
+const { confirmRemove, promptAddItem, removeItem, rename } = favoritesStore
+const $dropdownTrigger = useTemplateRef('dropdownTrigger')
 
 const iconMap = {
   'map-folder': 'folder',
@@ -71,6 +74,9 @@ const iconMap = {
   'map-favorite-item': 'description',
   'map-hyper-link': 'link'
 }
+
+const openDropdown = (index) => 
+  $dropdownTrigger.value[index].click()
 
 const getPath = (path, name) => {
   let pathString = ''
@@ -156,11 +162,11 @@ const share = (options = {}) => {
   Share.share({
     title: name,
     text: name,
-    url: `https://hymnal.timeic.top/#/${encodeURI(pathString)}`
+    url: options.type === "map-hyper-link" ? options.url : `https://hymnal.timeic.top/#/${encodeURI(pathString)}`,
   })
 }
 
-const auth = (auths, type = props.data.type) => !auths.includes(type)
+const disable = (menuItemTypes = [], type = props.data.type, routeNames = []) => !(menuItemTypes.includes(type) || routeNames.includes(route.name))
 </script>
 
 <style scoped>

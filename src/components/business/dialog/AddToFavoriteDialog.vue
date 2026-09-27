@@ -1,13 +1,7 @@
 <template>
   <div class="container">
     <mdui-list>
-      <mdui-list-item @click="promptAdd">
-        <div slot="custom" class="add">
-          <mdui-icon name='add' class="icon"></mdui-icon>
-          <div class="name">新建收藏夹</div>
-        </div>
-      </mdui-list-item>
-      <mdui-list-item v-for="e in data" @click="addToFavorite(item, e.name)">{{ e.name }}</mdui-list-item>
+      <mdui-list-item active v-for="e in data" :headline="e.name" :description="`${e.list.length} 项`" @click="addToFavorite(item, e.name)"></mdui-list-item>
     </mdui-list>
   </div>
 </template>
@@ -24,7 +18,7 @@ defineProps({
 })
 
 const favoritesStore = useFavorites()
-const { addItem, promptAdd } = favoritesStore
+const { addItem } = favoritesStore
 
 const addToFavorite = (item, name) => {
   addItem(item, name)
@@ -34,6 +28,9 @@ const addToFavorite = (item, name) => {
 
 <style scoped>
 .container {
+  mdui-list-item:not(:last-child) {
+    border-bottom: 0.5px solid rgba(128, 128, 128, 0.4);
+  }
   .add {
     @apply flex justify-start items-center p-3;
 

@@ -1,36 +1,33 @@
-import { ref } from "vue";
+import { ref } from 'vue';
+import { name, version, author } from '../../package.json';
+import { compareVersion } from '~/utils/utils.js';
 
-export const appInfo = ref({});
+const appInfo = ref({
+  name,
+  version,
+  author,
+});
 
-export async function chackUpdate() {
-  return fetch(
-    `https://api.github.com/repos/k34869/Hymnal-Library/releases/latest`
-  ).then(async (response) => {
+/**
+ * 检查更新
+ * @return {void}
+ */
+function checkUpdate() {
+  fetch(
+    'https://api.github.com/repos/k34869/hymnal-library/releases/latest',
+  ).then(response => {
     if (response.ok) {
-      return response.json().then((data) => {
-        const {
-          tag_name,
-          assets: [{ browser_download_url }],
-        } = data;
-        return { version: tag_name, browser_download_url };
+      response.json().then(({ tag_name: version }) => {
+        if (compareVersion(version, appInfo.value.version) === 1) {
+          confirm('有新版本可用，是否前往下载?') &&
+            window.open(
+              `https://openlist.timeic.top/#/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93_${info.version}.apk`,
+              '_blank',
+            );
+        }
       });
     }
   });
 }
 
-export function compareVersion(v1, v2) {
-  const a1 = v1.split(".").map(Number);
-  const a2 = v2.split(".").map(Number);
-
-  const len = Math.max(a1.length, a2.length);
-
-  for (let i = 0; i < len; i++) {
-    const n1 = a1[i] ?? 0;
-    const n2 = a2[i] ?? 0;
-
-    if (n1 > n2) return 1;
-    if (n1 < n2) return -1;
-  }
-
-  return 0;
-}
+export { appInfo, checkUpdate };

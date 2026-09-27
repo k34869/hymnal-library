@@ -14,14 +14,13 @@
 import 'mdui/components/card.js';
 import { ref } from 'vue'
 import { useRouter } from 'vue-router';
-import { useSearch } from '~/hooks/useSearch';
+import { search } from '~/hooks/useSearch';
 import { useRecent } from '~/stores/recent';
 import { snackbar } from "mdui/functions/snackbar.js";
 import { currentOpen } from '~/stores/currentOpen';
 
 const router = useRouter()
 const recentStore = useRecent()
-const { search } = useSearch()
 const toNumber = ref('0')
 const inCategory = ref('大本诗歌')
 const isAdditional = ref(false)
@@ -160,8 +159,6 @@ const action = (option) => {
     isAdditional.value = true
     inPrefix = content
   } else if (type === 'submit') {
-    console.log(`${inPrefix}${repairSN()}`);
-
     const res = search(`${inPrefix}${repairSN()}`, ['name'], false)
     const results = res.filter(item => item.category === inCategory.value)
 

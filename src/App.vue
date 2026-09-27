@@ -33,47 +33,10 @@ import TopBar from './components/layout/TopBar.vue';
 import BottomBar from './components/layout/BottomBar.vue';
 import SideBar from './components/layout/SideBar.vue';
 import Dialog from './components/common/Dialog.vue';
-import { ref, watch } from 'vue'
-import { useRoute } from 'vue-router';
 import { dialogStore } from '~/stores/dialog';
+import { useAutoHideBarAdaptation } from './hooks/useAutoHideBarAdaptation.js';
 
-const route = useRoute()
-const isHideBottomBar = ref(false)
-const isHide = ref(false)
-
-watch(() => route.name, (value) => {
-  if (/(markdown视图)/.test(value)) {
-    isHide.value = true
-    isHideBottomBar.value = false
-  } else if (/(收藏夹详情|设置)/.test(value)) {
-    isHide.value = false
-    isHideBottomBar.value = true
-  } else {
-    isHide.value = false
-    isHideBottomBar.value = false
-  }
-})
-
-// 安卓设备输入法弹出布局适配
-let originHeight = document.documentElement.clientHeight
-let orientation = window.matchMedia("(orientation: landscape)").matches
-window.addEventListener('resize', () => {
-  const resizeHeight = document.documentElement.clientHeight
-  // 屏幕方向改变时不判断
-  if (window.matchMedia("(orientation: landscape)").matches !== orientation) {
-    originHeight = resizeHeight;
-    orientation = window.matchMedia("(orientation: landscape)").matches
-    return
-  };
-
-  if (originHeight <= resizeHeight) {
-    // Android 键盘收起后操作
-    isHideBottomBar.value = false
-  } else {
-    // Android 键盘弹起后操作
-    isHideBottomBar.value = true
-  }
-}, false);
+const { isHide, isHideBottomBar } = useAutoHideBarAdaptation()
 </script>
 
 <style scoped>

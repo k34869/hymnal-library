@@ -57,6 +57,15 @@
         </mdui-list-item>
       </a>
 
+      <mdui-list-item @click="clearCache">
+        <div slot="custom" class="item">
+          <div class="start">
+            <mdui-icon name='delete_sweep' class="icon"></mdui-icon>
+            <div class="name font-bold-200">清除缓存</div>
+          </div>
+        </div>
+      </mdui-list-item>
+
       <mdui-list-item @click="showAboutDialog">
         <div slot="custom" class="item">
           <div class="start">
@@ -78,6 +87,7 @@ import SelectSetupPageDialog from '~/components/business/dialog/SelectSetupPageD
 import { storeToRefs } from 'pinia'
 import { useSettings } from '~/stores/settings';
 import { dialogStore } from '~/stores/dialog';
+import { clearCache } from '~/stores/cache';
 
 defineOptions({
   name: '设置'

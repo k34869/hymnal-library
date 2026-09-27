@@ -1,19 +1,19 @@
-import { CapacitorHttp } from "@capacitor/core";
-import { snackbar } from "mdui/functions/snackbar.js";
+import { CapacitorHttp } from '@capacitor/core';
+import { snackbar } from 'mdui/functions/snackbar.js';
 
 export async function getFile(path) {
   const promise = CapacitorHttp.post({
     url: `https://mfbt5siz.cn-nb1.rainapp.top/api/fs/get`,
     headers: {
-      accept: "application/json, text/plain, */*",
-      "content-type": "application/json",
+      accept: 'application/json, text/plain, */*',
+      'content-type': 'application/json',
     },
     data: {
       path,
-      password: "",
+      password: '',
     },
-  });
-  promise.catch((err) => {
+  }).then(({ data }) => data.data);
+  promise.catch(err => {
     snackbar({
       message: `❌${err.message}`,
       autoCloseDelay: 3000,
@@ -23,27 +23,33 @@ export async function getFile(path) {
 }
 
 export async function getFsList(path) {
-  return fetch(`/library/${path ? path + "/" : ""}map.json`).then((res) =>
+  return fetch(`/library/${path ? path + '/' : ''}map.json`).then(res =>
     res.json(),
   );
 }
 
 export async function getMarkdown(path) {
-  return fetch(`/library/${path ? path + "/" : ""}index.md`).then((res) =>
+  return fetch(`/library/${path ? path + '/' : ''}index.md`).then(res =>
     res.text(),
   );
 }
 
-export async function getDatabase() {
-  return fetch(`/library/db.json`).then((res) => res.json());
+export async function getMarkdownWeb(path) {
+  return fetch(
+    `https://cdn.jsdmirror.com/gh/k34869/hymnal-library@main/public/library/${path ? path + '/' : ''}index.md`,
+  ).then(res => res.text());
 }
 
-export const filterMark = (string) =>
-  string.replace(/<span class="mark">|<\/span>/g, "");
+export async function getDatabase() {
+  return fetch(`/library/db.json`).then(res => res.json());
+}
+
+export const filterMark = string =>
+  string.replace(/<span class="mark">|<\/span>/g, '');
 
 export function getPageItemLength(itemHeight) {
   return parseInt(
-    document.getElementById("main").getBoundingClientRect().height /
+    document.getElementById('main').getBoundingClientRect().height /
       itemHeight +
       5,
   );

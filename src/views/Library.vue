@@ -35,7 +35,7 @@ useSaveScrollPosition()
 .library {
   @apply relative left-0 right-0 m-auto;
   top: calc(0px - var(--safe-area-inset-top));
-  max-width: 760px;
+  max-width: 720px;
 }
 
 .fs-list-bottom-loading {

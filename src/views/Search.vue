@@ -1,22 +1,14 @@
 <template>
   <div class="container">
     <div class="search-from">
-      <Input v-model="queryKey" @submit="updateDatabase" :disabled="!isInit" />
+      <Input v-model="queryKey" />
     </div>
     <div class="search-main">
-      <div class="init" v-if="!isInit">
-        <div class="loading">
-          <mdui-circular-progress></mdui-circular-progress>
-        </div>
-        索引初始化中...
+      <FsList :data="fsList" :loading="isLoading" v-if="queryKey" />
+      <div class="random-rec" v-else>
+        <mdui-chip v-for="e in randomRec" @click="openMarkdown(data[e])">{{
+          data[e].name }}</mdui-chip>
       </div>
-      <template v-else>
-        <FsList :data="fsList" :loading="isLoading" v-if="queryKey" />
-        <div class="random-rec" v-else>
-          <mdui-chip v-for="e in randomRec" @click="openMarkdown(database[e])">{{
-            database[e].name }}</mdui-chip>
-        </div>
-      </template>
     </div>
   </div>
 </template>
@@ -28,19 +20,15 @@ import Input from '~/components/common/Input.vue';
 import FsList from '~/components/business/FsList.vue';
 import { ref, watch, onActivated, onDeactivated } from 'vue'
 import { useRouter } from 'vue-router';
-import { useSearch, database } from '~/hooks/useSearch';
+import { search, data } from '~/hooks/useSearch';
 import { uniqueRandoms } from '~/utils/utils';
 import { useSaveScrollPosition } from '~/hooks/useSaveScrollPosition';
 import { useRecent } from '~/stores/recent';
 import { currentOpen } from '~/stores/currentOpen';
 
 const router = useRouter()
-const { search, isInit, updateDatabase, fristInitPromise } = useSearch()
 const recentStore = useRecent()
-let randomRec = ref([])
-fristInitPromise.then((data) => {
-  randomRec.value = uniqueRandoms(0, data.length, 15)
-})
+let randomRec = ref(uniqueRandoms(0, data.length, 15))
 
 const openMarkdown = (item) => {
   recentStore.add({
