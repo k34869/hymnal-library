@@ -13,12 +13,12 @@
 
 ## 适配平台
 
-[x] Android
-[x] IOS
-[x] Pad
-[x] Windows
-[x] Linux
-[x] macOS
+- [x] Android
+- [] IOS
+- [x] Pad
+- [x] Windows
+- [x] Linux
+- [x] macOS
 
 ## 下载
 
