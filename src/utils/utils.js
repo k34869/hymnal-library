@@ -3,7 +3,7 @@
  * @param {number} min 最小数
  * @param {number} max 最大数
  * @param {number} count 个数
- * @return {Array} 生成结果
+ * @returns {Array} 生成结果
  */
 export function uniqueRandoms(min, max, count) {
   if (min > max) throw new Error('min 必须 <= max');
@@ -26,7 +26,7 @@ export function uniqueRandoms(min, max, count) {
 /**
  * 通过字符串创建 Element
  * @param {string} string 元素字符串
- * @return {Element} 元素
+ * @returns {Element} 元素
  */
 export function $(string) {
   const container = document.createElement('div');
@@ -38,7 +38,7 @@ export function $(string) {
  * 版本号对比
  * @param {string} v1 版本1
  * @param {string} v2 版本2
- * @return {number} (1: v1 > v2), (0: v1 = v2), (-1: v1 < v2)
+ * @returns {number} (1: v1 > v2), (0: v1 = v2), (-1: v1 < v2)
  */
 export function compareVersion(v1, v2) {
   const a1 = v1.split('.').map(Number);
@@ -61,7 +61,7 @@ export function compareVersion(v1, v2) {
  * 数据持久化
  * @param {any} initialValue 初始值
  * @param {string} [key='localState'] localStorage 存储 key
- * @return {Proxy} 持久化数据( 通过 .value 访问 )
+ * @returns {Proxy} 持久化数据( 通过 .value 访问 )
  */
 export function persVer(initialValue, key = 'localState') {
   // 1️⃣ 初始化：优先从 localStorage 读取
@@ -110,4 +110,26 @@ export function persVer(initialValue, key = 'localState') {
   };
 
   return wrapper;
+}
+
+/**
+ * 防抖函数
+ * @param {Function} func - 需要防抖执行的函数
+ * @param {number} wait - 延迟时间（毫秒）
+ * @returns {Function} - 返回防抖后的函数
+ */
+export function debounce(func, wait = 30) {
+  let timeout;
+
+  return function (...args) {
+    const context = this; // 保存当前上下文
+
+    // 如果之前有定时器，清除它（重置计时）
+    if (timeout) clearTimeout(timeout);
+
+    // 重新设置定时器
+    timeout = setTimeout(() => {
+      func.apply(context, args); // 执行原函数，保持 this 指向和参数传递
+    }, wait);
+  };
 }

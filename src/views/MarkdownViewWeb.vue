@@ -34,7 +34,7 @@ const { isLoading } = useRenderMarkdownWeb('.container .markdown-content')
 
   .markdown-content {
     @apply relative left-0 right-0 m-auto;
-    padding: calc(var(--safe-area-inset-top) + 30px) 8px var(--safe-area-inset-bottom) 8px;
+    padding: calc(var(--safe-area-inset-top) + var(--safe-area-content-top)) 8px var(--safe-area-inset-bottom) 8px;
     max-width: 720px;
     user-select: text;
   }

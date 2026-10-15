@@ -1,5 +1,5 @@
 <template>
-  <mdui-text-field variant="outlined" :value="modelValue" :label="label" clearable
+  <mdui-text-field ref="input" variant="outlined" :value="modelValue" :label="label" clearable
     @input="$emit('update:modelValue', $event.target.value)">
     <mdui-button-icon slot="end-icon" icon="search"></mdui-button-icon>
   </mdui-text-field>
@@ -7,6 +7,13 @@
 
 <script setup>
 import 'mdui/components/text-field.js';
+import { useTemplateRef } from 'vue';
+
+const $input = useTemplateRef('input')
+
+const focus = () => {
+  $input.value.focus()
+}
 
 defineProps({
   label: {
@@ -19,6 +26,10 @@ defineProps({
 const emit = defineEmits([
   'update:modelValue'
 ])
+
+defineExpose({
+  focus
+})
 </script>
 
 <style scoped>

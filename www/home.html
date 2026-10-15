@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <title>诗歌库</title>
+    <link
+      rel="shortcut icon"
+      href="https://cdn.jsdmirror.com/gh/k34869/hymnal-library@main/public/resources/logo/icon-48.png"
+      type="image/png"
+    />
+    <meta name="author" content="k34869,build17293@gmail.com" />
+    <meta name="copyright" content="k34869" />
+    <meta name="description" content="Hymnal Library - 诗歌库" />
+    <meta name="keywords" content="hymnal,诗歌,主恢复,赞美" />
+    <style>
+      body {
+        background: #0c343d;
+      }
+      main {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      main .logo {
+        width: 180px;
+        height: 180px;
+      }
+      main .logo img {
+        width: 100%;
+      }
+      main h1 {
+        display: none;
+        font-size: 34px;
+      }
+      main hr {
+        width: 280px;
+        border-bottom: 1px solid rgb(252, 252, 252);
+        border-top: 0px;
+      }
+      main section {
+        margin-top: 18px;
+      }
+      main section .download-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      main section .download-item p {
+        cursor: pointer;
+        border: 1px solid rgb(252, 252, 252);
+        font-size: 16px;
+        font-weight: bold;
+        font-family: Arial, Helvetica, sans-serif;
+        color: rgb(252, 252, 252);
+        text-align: center;
+        padding: 15px 22px;
+      }
+      main section .download-item p:hover {
+        background-color: #915326;
+        color: rgb(252, 252, 252);
+      }
+      a {
+        text-decoration: none;
+        color: #6db7f8;
+      }
+      a:hover {
+        color: #cdd5ff;
+      }
+      footer p {
+        color: rgb(252, 252, 252);
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="logo">
+        <img
+          src="https://cdn.jsdmirror.com/gh/k34869/hymnal-library@main/public/resources/logo/logo-full.png"
+        />
+      </div>
+      <h1>诗歌库</h1>
+      <hr />
+      <section id="download"></section>
+    </main>
+    <script>
+      function getOS() {
+        const ua = navigator.userAgent;
+
+        if (/Android/i.test(ua)) return 'Android';
+
+        if (/iPhone|iPad|iPod/i.test(ua)) return 'iOS';
+
+        if (/Windows NT/i.test(ua)) {
+          return 'Windows';
+        }
+
+        if (/Macintosh|Mac OS X/i.test(ua)) {
+          // iPadOS 可以伪装成 Mac，这里额外判断
+          if (navigator.maxTouchPoints > 1) return 'iOS';
+          return 'macOS';
+        }
+
+        if (/Linux/i.test(platform) || /Linux/i.test(ua)) {
+          return 'Linux';
+        }
+
+        return 'Unknown';
+      }
+      function $(string) {
+        const container = document.createElement('div');
+        container.classList.add('download-item');
+        container.innerHTML = string;
+        return container;
+      }
+      const __OS__ = getOS();
+      const $download = document.getElementById('download');
+      if (__OS__ === 'Windows') {
+        $download.appendChild(
+          $(
+            '<a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93-win_x64.exe" target="_blank"><p>Windows X64版 下载</p></a>',
+          ),
+        );
+      } else if (__OS__ === 'macOS') {
+        $download.appendChild(
+          $(
+            '<a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93-mac_x64" target="_blank"><p>macOS Intel芯片版 下载</p></a><a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93-mac_arm64" target="_blank"><p>macOS M芯片版 下载</p></a>',
+          ),
+        );
+      } else if (__OS__ === 'Android') {
+        $download.appendChild(
+          $(
+            '<a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93.apk" target="_blank"><p>Android 版 下载</p></a>',
+          ),
+        );
+      } else if (__OS__ === 'iOS') {
+        $download.appendChild(
+          $(
+            '<a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93.ipa" target="_blank"><p>iPhone/iPad 版 下载</p></a>',
+          ),
+        );
+      } else if (__OS__ === 'Linux') {
+        $download.appendChild(
+          $(
+            '<a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93-linux_x64" target="_blank"><p>Linux X64版 下载</p></a><a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93-linux_arm64" target="_blank"><p>Linux Arm64版 下载</p></a><a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93-linux_armhf" target="_blank"><p>Linux Armhf版 下载</p></a>',
+          ),
+        );
+      } else {
+        $download.appendChild(
+          $(
+            '<a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93.apk" target="_blank"><p>Android 版 下载</p></a><a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93.ipa" target="_blank"><p>iPhone/iPad 版 下载</p></a>',
+          ),
+        );
+      }
+    </script>
+    <footer>
+      <p>
+        联系邮箱:
+        <a href="mailto:build17293@gmail.com" target="_parent"
+          >build17293@gmail.com</a
+        >
+        | Telegram: <a href="https://t.me/+Jpqt5_HZNSNkZDY1">诗歌库</a>
+      </p>
+    </footer>
+  </body>
+</html>

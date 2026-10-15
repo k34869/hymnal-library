@@ -2,8 +2,8 @@
   <div class="container">
     <mdui-text-field ref="input" :label="label" :value="value"></mdui-text-field>
     <div class="buttons">
-      <mdui-button variant="filled" @click="dialogStore.close">取消</mdui-button>
-      <mdui-button variant="filled" @click="submit(value)">确认</mdui-button>
+      <mdui-button variant="tonal" @click="dialogStore.close">取消</mdui-button>
+      <mdui-button variant="tonal" @click="submit(value)">确认</mdui-button>
     </div>
   </div>
 </template>

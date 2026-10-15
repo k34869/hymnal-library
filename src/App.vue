@@ -11,7 +11,7 @@
         </div>
         <router-view v-slot="{ Component }">
           <transition :name="$route.meta.transition || 'fade'" mode="out-in">
-            <KeepAlive :exclude="['收藏夹详情', 'markdown视图', '设置']">
+            <KeepAlive :exclude="keepAliveExclude">
               <component :is="Component"></component>
             </KeepAlive>
           </transition>
@@ -35,6 +35,7 @@ import SideBar from './components/layout/SideBar.vue';
 import Dialog from './components/common/Dialog.vue';
 import { dialogStore } from '~/stores/dialog';
 import { useAutoHideBarAdaptation } from './hooks/useAutoHideBarAdaptation.js';
+import { keepAliveExclude } from './stores/keepAliveExclude.js';
 
 const { isHide, isHideBottomBar } = useAutoHideBarAdaptation()
 </script>

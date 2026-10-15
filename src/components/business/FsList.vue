@@ -5,8 +5,8 @@
       <p>什么都没有?</p>
     </div>
     <template v-else>
-      <mdui-list-item v-for="(item, index) in data.list" @contextmenu="openDropdown(index)">
-        <div class="fs-list-item" slot="custom" @click="open(item)">
+      <mdui-list-item v-for="(item, index) in data.list" @click="open(item)" @contextmenu="openDropdown(index)">
+        <div class="fs-list-item" slot="custom">
           <mdui-icon :name="item.type ? iconMap[item.type] : iconMap[data.type]"></mdui-icon>
           <div class="fs-list-content">
             <div class="headline line-hide-1" v-html="item.name"></div>
@@ -170,6 +170,10 @@ const disable = (menuItemTypes = [], type = props.data.type, routeNames = []) =>
 </script>
 
 <style scoped>
+mdui-list-item:has( mdui-dropdown[open]) {
+  background-color: rgb(var(--mdui-color-secondary-container));
+}
+
 .fs-list-item {
   @apply flex items-center justify-between;
 

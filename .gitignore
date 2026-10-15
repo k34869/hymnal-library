@@ -6,11 +6,15 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+neutralinojs.log*
+.tmp/*
 
 node_modules
 dist
 dist-ssr
 *.local
+/bin
+/desktop
 
 # Editor directories and files
 .vscode/*

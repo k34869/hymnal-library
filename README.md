@@ -1,5 +1,5 @@
 <div align="center">
-    <img width="200" height="200" src="https://github.com/k34869/Hymnal-Library/blob/main/public/resources/logo/logo-full.png">
+    <img width="200" height="200" src="https://github.com/k34869/hymnal-library/blob/main/public/resources/logo/logo-full.png">
 </div>
 
 <div align="center">
@@ -10,3 +10,16 @@
 ![GitHub all releases](https://img.shields.io/github/downloads/k34869/hymnal-library/total)
 
 </div>
+
+## 适配平台
+
+[x] Android
+[x] IOS
+[x] Pad
+[x] Windows
+[x] Linux
+[x] macOS
+
+## 下载
+
+可以从 [Releases](https://github.com/k34869/hymnal-library/releases) 下载，或克隆仓库拉取代码后在本地编译

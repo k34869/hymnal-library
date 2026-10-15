@@ -2,7 +2,7 @@
   "name": "hymnal-library",
   "private": true,
   "author": "k34869",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "type": "module",
   "scripts": {
     "serve": "vite --host 0.0.0.0",
@@ -10,7 +10,9 @@
     "start": "cap run",
     "start:android": "cap run android",
     "start:ios": "cap run ios",
+    "start:desktop": "neu run",
     "build": "cap build",
+    "build:desktop": "neu build --embed-resources",
     "build:web": "vite build",
     "preview": "vite preview"
   },
@@ -24,6 +26,7 @@
     "flexsearch": "^0.8.212",
     "marked": "^16.4.1",
     "mdui": "^2.1.4",
+    "mousetrap": "^1.6.5",
     "pinia": "^3.0.3",
     "pinia-plugin-persistedstate": "^4.5.0",
     "vue": "^3.5.12",
@@ -32,8 +35,10 @@
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^7.4.3",
+    "@neutralinojs/neu": "^11.8.0",
     "@vitejs/plugin-vue": "^6.0.1",
     "autoprefixer": "^10.4.21",
+    "baseline-browser-mapping": "^2.11.28",
     "postcss": "^8.5.6",
     "postcss-nesting": "^13.0.2",
     "vite": "^7.1.2",

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="settings-header">
-      <mdui-button-icon icon="arrow_back" class="icon" @click="$router.back"></mdui-button-icon>
+      <mdui-button-icon icon="arrow_back" class="icon" @click="$router.back" title="返回( ESC )"></mdui-button-icon>
       <div class="title font-bold-200">设置</div>
     </div>
 
@@ -46,7 +46,7 @@
         </div>
       </mdui-list-item>
 
-      <a href="https://t.me/+Jpqt5_HZNSNkZDY1">
+      <a href="https://t.me/+Jpqt5_HZNSNkZDY1" target="_blank">
         <mdui-list-item>
           <div slot="custom" class="item">
             <div class="start">
@@ -84,15 +84,18 @@ import 'mdui/components/list-item.js';
 import 'mdui/components/switch.js';
 import AboutDialog from '~/components/business/dialog/AboutDialog.vue';
 import SelectSetupPageDialog from '~/components/business/dialog/SelectSetupPageDialog.vue';
+import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia'
 import { useSettings } from '~/stores/settings';
 import { dialogStore } from '~/stores/dialog';
 import { clearCache } from '~/stores/cache';
+import { useMousetrapBind } from '~/hooks/useMousetrapBind';
 
 defineOptions({
   name: '设置'
 })
 
+const router = useRouter()
 const { isDark, isDarkWithSystem, isScreenAlways, setupPageName } = storeToRefs(useSettings())
 
 const openSelectSetupPage = () => {
@@ -104,12 +107,16 @@ const showAboutDialog = () => {
   dialogStore.title = '关于诗歌库'
   dialogStore.open(AboutDialog)
 }
+
+useMousetrapBind({
+  'esc': router.back
+})
 </script>
 
 <style scoped>
 .container {
   @apply relative left-0 right-0 m-auto;
-  max-width: 760px;
+  max-width: 720px;
 
   .item {
     @apply flex justify-between items-center;

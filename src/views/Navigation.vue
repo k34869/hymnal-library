@@ -18,6 +18,7 @@ import { search } from '~/hooks/useSearch';
 import { useRecent } from '~/stores/recent';
 import { snackbar } from "mdui/functions/snackbar.js";
 import { currentOpen } from '~/stores/currentOpen';
+import { useMousetrapBind } from '~/hooks/useMousetrapBind';
 
 const router = useRouter()
 const recentStore = useRecent()
@@ -141,14 +142,32 @@ const openMarkdown = (options) => {
   router.push(`/markdown-view?path=${path}`)
 }
 
+const backspaceNumber = () => {
+  const length = toNumber.value.length
+  toNumber.value = length === 1 ? '0' : toNumber.value.slice(0, length - 1)
+}
+
+const submit = () => {
+  const res = search(`${inPrefix}${repairSN()}`, ['name'], false)
+  const results = res.filter(item => item.category === inCategory.value)
+
+  if (results.length === 0 || toNumber.value == '0') {
+    snackbar({
+      message: `⚠️没有查询到结果`,
+      autoCloseDelay: 3000
+    })
+  } else if (results.length > 0) {
+    openMarkdown(results[0])
+  }
+}
+
 const action = (option) => {
   const { content, type, prefix } = option
 
   if (type === 'number') {
     toNumber.value = String(parseInt(toNumber.value + content))
   } else if (type === 'backspace') {
-    const length = toNumber.value.length
-    toNumber.value = length === 1 ? '0' : toNumber.value.slice(0, length - 1)
+    backspaceNumber()
   } else if (type === 'clear') {
     toNumber.value = '0'
   } else if (type === 'navigation') {
@@ -159,19 +178,20 @@ const action = (option) => {
     isAdditional.value = true
     inPrefix = content
   } else if (type === 'submit') {
-    const res = search(`${inPrefix}${repairSN()}`, ['name'], false)
-    const results = res.filter(item => item.category === inCategory.value)
-
-    if (results.length === 0 || toNumber.value == '0') {
-      snackbar({
-        message: `⚠️没有查询到结果`,
-        autoCloseDelay: 3000
-      })
-    } else if (results.length > 0) {
-      openMarkdown(results[0])
-    }
+    submit()
   }
 }
+
+useMousetrapBind({
+  'numbers': (e, combo) => {
+    toNumber.value = String(parseInt(toNumber.value + combo))
+  },
+  'backspace': backspaceNumber,
+  'ctrl+backspace': () => {
+    toNumber.value = '0'
+  },
+  'enter': submit
+})
 </script>
 
 <style scoped>

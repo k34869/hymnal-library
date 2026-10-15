@@ -17,6 +17,7 @@ import { useRouter } from 'vue-router';
 import { useLoadFsList } from '~/hooks/useLoadFsList';
 import { useSettings } from "~/stores/settings";
 import { useSaveScrollPosition } from '~/hooks/useSaveScrollPosition';
+import { useMousetrapBind } from '~/hooks/useMousetrapBind';
 
 const router = useRouter()
 const { paginationFslist, isLoading, isShowBottomLoading, pathArray } = useLoadFsList()
@@ -29,6 +30,9 @@ if (settingsStore.setupPageName !== '资料库') {
 }
 
 useSaveScrollPosition()
+useMousetrapBind({
+  'backspace': router.back
+})
 </script>
 
 <style scoped>

@@ -1,6 +1,8 @@
+import ConfirmDialog from '~/components/business/dialog/ConfirmDialog.vue';
 import { ref } from 'vue';
 import { name, version, author } from '../../package.json';
 import { compareVersion } from '~/utils/utils.js';
+import { dialogStore } from '~/stores/dialog';
 
 const appInfo = ref({
   name,
@@ -10,20 +12,25 @@ const appInfo = ref({
 
 /**
  * 检查更新
- * @return {void}
+ * @returns {void}
  */
-function checkUpdate() {
+function checkUpdate(platformEndName) {
   fetch(
     'https://api.github.com/repos/k34869/hymnal-library/releases/latest',
   ).then(response => {
     if (response.ok) {
       response.json().then(({ tag_name: version }) => {
         if (compareVersion(version, appInfo.value.version) === 1) {
-          confirm('有新版本可用，是否前往下载?') &&
+          dialogStore.title = '更新';
+          dialogStore.open(ConfirmDialog, {
+            message: '有新版本可用，是否前往下载?',
+          });
+          dialogStore.onSubmit = () => {
             window.open(
-              `https://openlist.timeic.top/#/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93_${info.version}.apk`,
+              `https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93${platformEndName}`,
               '_blank',
             );
+          };
         }
       });
     }

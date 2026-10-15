@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="search-from">
-      <Input v-model="queryKey" />
+      <Input ref="input" v-model="queryKey" title="搜索( / )" />
     </div>
     <div class="search-main">
       <FsList :data="fsList" :loading="isLoading" v-if="queryKey" />
@@ -18,14 +18,16 @@ import 'mdui/components/chip.js';
 import 'mdui/components/tooltip.js';
 import Input from '~/components/common/Input.vue';
 import FsList from '~/components/business/FsList.vue';
-import { ref, watch, onActivated, onDeactivated } from 'vue'
+import { ref, watch, onActivated, onDeactivated, useTemplateRef } from 'vue'
 import { useRouter } from 'vue-router';
 import { search, data } from '~/hooks/useSearch';
 import { uniqueRandoms } from '~/utils/utils';
 import { useSaveScrollPosition } from '~/hooks/useSaveScrollPosition';
 import { useRecent } from '~/stores/recent';
 import { currentOpen } from '~/stores/currentOpen';
+import { useMousetrapBind } from '~/hooks/useMousetrapBind';
 
+const $input = useTemplateRef('input')
 const router = useRouter()
 const recentStore = useRecent()
 let randomRec = ref(uniqueRandoms(0, data.length, 15))
@@ -53,6 +55,13 @@ const fsList = ref({
 })
 
 useSaveScrollPosition()
+useMousetrapBind({
+  '/': () => {
+    setTimeout(() => {
+      $input.value.focus()
+    }, 20);
+  }
+})
 
 let stop
 onActivated(() => {
@@ -66,15 +75,13 @@ onActivated(() => {
   })
 })
 
-onDeactivated(() => {
-  stop()
-})
+onDeactivated(() => stop)
 </script>
 
 <style scoped>
 .container {
   @apply relative left-0 right-0 m-auto;
-  max-width: 760px;
+  max-width: 720px;
 
   .search-from {
     @apply w-full;

@@ -27,9 +27,9 @@ export function useMarkedParse() {
       el.setAttribute('controlsList', 'nodownload');
       el.setAttribute(
         'src',
-        el.nodeName === 'VIDEO'
-          ? 'https://cdn.jsdmirror.com/gh/k34869/hymnal-library@main/public/resources/silent.mp4'
-          : 'https://cdn.jsdmirror.com/gh/k34869/hymnal-library@main/public/resources/silent.mp3',
+        el.nodeName === 'AUDIO'
+          ? 'https://cdn.jsdmirror.com/gh/k34869/hymnal-library@main/public/resources/silent.mp3'
+          : '',
       );
     }
     return elements;

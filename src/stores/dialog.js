@@ -1,9 +1,9 @@
-import { shallowRef, reactive } from "vue";
+import { shallowRef, reactive } from 'vue';
 
 export const dialogStore = reactive({
   isOpen: false,
-  title: "",
-  description: "",
+  title: '',
+  description: '',
   component: null,
   props: null,
   showButtons: false,
@@ -17,8 +17,8 @@ export const dialogStore = reactive({
     this.isOpen = false;
     setTimeout(() => {
       this.props = null;
-      this.title = "";
-      this.description = "";
+      this.title = '';
+      this.description = '';
       this.showButtons = false;
       this.onSubmit = () => {};
       this.component = null;

@@ -1,0 +1,29 @@
+<!doctype html>
+<html style="--safe-area-content-top: 30px">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <title>诗歌库</title>
+    <script>
+      const { isDarkWithSystem = true, isDark = false } = JSON.parse(
+        localStorage.settings ?? '{}',
+      );
+      if (isDarkWithSystem) {
+        document.documentElement.setAttribute('class', 'mdui-theme-auto');
+      } else {
+        if (isDark) {
+          document.documentElement.setAttribute('class', 'mdui-theme-dark');
+        }
+      }
+    </script>
+    <link rel="stylesheet" href="./resources/fancybox.min.css" />
+    <script src="./resources/fancybox.min.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

@@ -1,9 +1,10 @@
+import AddToFavoriteDialog from '~/components/business/dialog/AddToFavoriteDialog.vue';
+import PromptDialog from '~/components/business/dialog/PromptDialog.vue';
+import ConfirmDialog from '~/components/business/dialog/ConfirmDialog.vue';
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import { dialogStore } from '~/stores/dialog';
 import { snackbar } from 'mdui';
-import AddToFavoriteDialog from '~/components/business/dialog/AddToFavoriteDialog.vue';
-import PromptDialog from '~/components/business/dialog/PromptDialog.vue';
 
 export const useFavorites = defineStore(
   'favorites',
@@ -76,13 +77,20 @@ export const useFavorites = defineStore(
       const index = find(name);
 
       if (isFavorited(index, item.path)) {
-        if (confirm(`收藏夹中已经存在 “${item.name}”, 是否重复添加?`)) {
-          favorites.value.list[index].list.unshift(item);
-          snackbar({
-            message: '✅添加成功',
-            autoCloseDelay: 3000,
+        dialogStore.close();
+        setTimeout(() => {
+          dialogStore.title = '已存在';
+          dialogStore.open(ConfirmDialog, {
+            message: `收藏夹中已经存在 “${item.name}”, 是否重复添加?`,
           });
-        }
+          dialogStore.onSubmit = () => {
+            favorites.value.list[index].list.unshift(item);
+            snackbar({
+              message: '✅添加成功',
+              autoCloseDelay: 3000,
+            });
+          };
+        }, 250);
       } else {
         favorites.value.list[index].list.unshift(item);
         snackbar({
@@ -106,24 +114,24 @@ export const useFavorites = defineStore(
     };
 
     const confirmRemove = name => {
-      setTimeout(() => {
-        if (confirm(`是否删除 “${name}” ?`)) {
-          remove(name);
-        }
-      }, 0);
+      dialogStore.title = '删除';
+      dialogStore.open(ConfirmDialog, {
+        message: `是否删除 “${name}” ?`,
+      });
+      dialogStore.onSubmit = () => {
+        remove(name);
+      };
     };
 
     const removeItem = index => {
-      setTimeout(() => {
-        const fIndex = find(inFavoriteName.value);
-        if (
-          confirm(
-            `是否删除 “${favorites.value.list[fIndex].list[index].name}” ?`,
-          )
-        ) {
-          favorites.value.list[fIndex].list.splice(index, 1);
-        }
-      }, 0);
+      const fIndex = find(inFavoriteName.value);
+      dialogStore.title = '删除';
+      dialogStore.open(ConfirmDialog, {
+        message: `是否删除 “${favorites.value.list[fIndex].list[index].name}” ?`,
+      });
+      dialogStore.onSubmit = () => {
+        favorites.value.list[fIndex].list.splice(index, 1);
+      };
     };
 
     return {

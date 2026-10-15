@@ -1,9 +1,10 @@
-.markdown-content a[data-fancybox="gallery"] {
+.markdown-content a[data-fancybox='gallery'] {
   display: block;
   width: 100%;
   min-height: 180px;
   border-radius: 10px;
   margin: 8px 0;
+  background-color: rgb(var(--mdui-color-surface-container));
 }
 
 .markdown-content img {
@@ -55,8 +56,8 @@
   letter-spacing: 1.2px;
 }
 
-.fancybox__dialog button[title="Previous"],
-.fancybox__dialog button[title="Next"] {
+.fancybox__dialog button[title='Previous'],
+.fancybox__dialog button[title='Next'] {
   display: none !important;
 }
 

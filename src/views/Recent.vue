@@ -13,10 +13,12 @@
 <script setup>
 import 'mdui/components/button-icon.js';
 import FsList from '~/components/business/FsList.vue';
+import ConfirmDialog from '~/components/business/dialog/ConfirmDialog.vue';
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRecent } from '~/stores/recent';
 import { useSaveScrollPosition } from '~/hooks/useSaveScrollPosition';
+import { dialogStore } from '~/stores/dialog';
 
 const recentStore = useRecent()
 const { list } = storeToRefs(recentStore)
@@ -26,10 +28,11 @@ const data = ref({
 
 const clear = () => {
   if (list.value.length > 0) {
-    const isClear = confirm("是否删除所有浏览历史?")
-    if (isClear) {
-      recentStore.clear()
-    }
+    dialogStore.title = '清空历史';
+    dialogStore.open(ConfirmDialog, {
+      message: '是否删除所有浏览历史?',
+    });
+    dialogStore.onSubmit = recentStore.clear;
   }
 }
 
@@ -39,7 +42,7 @@ useSaveScrollPosition()
 <style scoped>
 .recent {
   @apply relative left-0 right-0 m-auto;
-  max-width: 760px;
+  max-width: 720px;
 
   .recent-header {
     @apply flex justify-between items-center;

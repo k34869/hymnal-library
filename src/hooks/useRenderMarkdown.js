@@ -15,23 +15,19 @@ export function useRenderMarkdown(selector) {
   const directory = ref('');
   const title = ref('');
 
-  const loadImageVideo = (el, elp, url) => {
-    if (el.nodeName === 'VIDEO') {
-      el.setAttribute('src', url);
-    } else {
-      elp.setAttribute('data-src', url);
-      elp.classList.remove('skeleton');
-      el.setAttribute('src', url);
-      el.classList.remove('hidden');
-    }
+  const loadImage = (el, elp, url) => {
+    elp.setAttribute('data-src', url);
+    elp.classList.remove('skeleton');
+    el.setAttribute('src', url);
+    el.classList.remove('hidden');
   };
 
   onMounted(() => {
     isLoading.value = false;
     pathString.value = route.query.path;
+    const pathArray = pathString.value.split('/');
+    title.value = pathArray[pathArray.length - 1];
     getMarkdown(pathString.value).then(content => {
-      const pathArray = pathString.value.split('/');
-      title.value = pathArray[pathArray.length - 1];
       directory.value = pathString.value.replace(title.value, '');
       const html = markedParse({
         title: title.value,
@@ -44,27 +40,32 @@ export function useRenderMarkdown(selector) {
         const elp = el.nodeName === 'VIDEO' ? el : el.parentNode;
         const src = elp.getAttribute('data-src');
         if (!/(http:\/\/|https:\/\/|:\/\/)/.test(src)) {
-          if (cacheUrl.value[`/hymnal-library/${pathString.value}/${src}`]) {
-            loadImageVideo(
-              el,
-              elp,
-              cacheUrl.value[`/hymnal-library/${pathString.value}/${src}`],
+          if (el.nodeName === 'VIDEO') {
+            const { href } = new URL(
+              `https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/${pathString.value}/${src}`,
             );
+            el.setAttribute('src', href);
           } else {
-            getFile(`/hymnal-library/${pathString.value}/${src}`).then(
-              ({ raw_url }) => {
-                loadImageVideo(el, elp, raw_url);
-                if (el.nodeName !== 'VIDEO') {
+            if (cacheUrl.value[`/hymnal-library/${pathString.value}/${src}`]) {
+              loadImage(
+                el,
+                elp,
+                cacheUrl.value[`/hymnal-library/${pathString.value}/${src}`],
+              );
+            } else {
+              getFile(`/hymnal-library/${pathString.value}/${src}`).then(
+                ({ raw_url }) => {
+                  loadImage(el, elp, raw_url);
                   cacheUrl.value[`/hymnal-library/${pathString.value}/${src}`] =
                     raw_url;
-                }
-              },
+                },
+              );
+            }
+            listenErrorUpdateCache(
+              el,
+              `/hymnal-library/${pathString.value}/${src}`,
             );
           }
-          listenErrorUpdateCache(
-            el,
-            `/hymnal-library/${pathString.value}/${src}`,
-          );
         }
         observer.unobserve(entry.target);
       });
@@ -74,16 +75,15 @@ export function useRenderMarkdown(selector) {
           el.removeEventListener('play', lazyMedia);
           el.setAttribute('src', '');
           el.setAttribute('src', '/resources/silent.mp3');
-          if (!/(http:\/\/|https:\/\/|:\/\/)/.test(src)) {
-            getFile(`/hymnal-library/${pathString.value}/${src}`).then(
-              ({ raw_url }) => {
-                el.setAttribute('src', raw_url);
-                el.play();
-              },
-            );
-          }
+          const { href } = new URL(
+            `https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/${pathString.value}/${src}`,
+          );
+          el.setAttribute('src', href);
+          el.play();
         };
-        el.addEventListener('play', lazyMedia);
+        if (!/(http:\/\/|https:\/\/|:\/\/)/.test(src)) {
+          el.addEventListener('play', lazyMedia);
+        }
       }
       document.querySelector(selector).appendChild(html);
       Fancybox.bind('[data-fancybox="gallery"]', {

@@ -26,6 +26,7 @@ defineOptions({
 <style scoped>
 .dialog {
   user-select: text;
+  transition: all 0.2s;
 
   .button {
     margin-left: 15px;

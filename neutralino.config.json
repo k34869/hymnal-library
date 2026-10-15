@@ -1,0 +1,50 @@
+{
+  "$schema": "https://raw.githubusercontent.com/neutralinojs/neutralinojs/main/schemas/neutralino.config.schema.json",
+  "applicationId": "com.k34869.hymnal.library",
+  "applicationName": "诗歌库",
+  "author": "k34869",
+  "description": "Hymnal Library",
+  "applicationIcon": "icons/icon-96.png",
+  "version": "1.2.4",
+  "defaultMode": "window",
+  "port": 0,
+  "documentRoot": "/desktop/resources/",
+  "url": "/",
+  "enableServer": true,
+  "enableNativeAPI": true,
+  "tokenSecurity": "one-time",
+  "nativeAllowList": ["app.*", "os.*", "event.*", "window.*", "computer.*"],
+  "modes": {
+    "window": {
+      "title": "诗歌库",
+      "width": 900,
+      "height": 720,
+      "minWidth": 355,
+      "minHeight": 685,
+      "center": true,
+      "fullScreen": false,
+      "alwaysOnTop": false,
+      "icon": "/icons/icon-96.png",
+      "enableInspector": false,
+      "maximize": false,
+      "hidden": false,
+      "borderless": false,
+      "resizable": true,
+      "useSavedState": true,
+      "exitProcessOnClose": false,
+      "newWindowPolicy": "browser",
+      "injectGlobals": true
+    }
+  },
+  "cli": {
+    "binaryName": "hymnal-library",
+    "resourcesPath": "/desktop/resources",
+    "binaryVersion": "6.10.0",
+    "clientVersion": "6.10.0",
+    "distributionPath": "/desktop/dist"
+  },
+  "logging": {
+    "enabled": false,
+    "writeToLogFile": false
+  }
+}

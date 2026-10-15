@@ -10,12 +10,14 @@ export function clearCache() {
 }
 
 export function listenErrorUpdateCache(el, key) {
-  if (el.nodeName !== 'VIDEO') {
-    el.addEventListener('error', () => {
-      getFile(key).then(({ raw_url }) => {
-        cacheUrl.value[key] = raw_url;
-        el.setAttribute('src', raw_url);
-      });
+  const errorHandler = () => {
+    el.classList.add('hidden');
+    getFile(key).then(({ raw_url }) => {
+      cacheUrl.value[key] = raw_url;
+      el.setAttribute('src', raw_url);
+      el.classList.remove('hidden');
     });
-  }
+    el.removeEventListener('error', errorHandler);
+  };
+  el.addEventListener('error', errorHandler);
 }

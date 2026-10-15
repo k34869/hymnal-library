@@ -13,6 +13,3 @@ mp3
 ![image-6.jpg](./image-6.jpg)
 
 ![image-7.jpg](./image-7.jpg)
-
-，时长04:08
-

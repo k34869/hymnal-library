@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="header">
-      <mdui-button-icon icon='arrow_back' @click="$router.back"></mdui-button-icon>
+      <mdui-button-icon icon='arrow_back' @click="$router.back" title="返回( ESC )"></mdui-button-icon>
       <span class="title line-hide-1">{{ directory }}</span>
       <mdui-dropdown>
         <mdui-button-icon slot="trigger" icon="more_vert" class="more"></mdui-button-icon>
@@ -21,15 +21,18 @@
 <script setup>
 import '~/assets/css/marked.css'
 import 'mdui/components/button-icon.js';
+import { useRouter } from 'vue-router'
 import { Share } from '@capacitor/share'
 import { useRenderMarkdown } from '~/hooks/useRenderMarkdown'
 import { useFavorites } from '~/stores/favorites';
 import { currentOpen } from '~/stores/currentOpen';
+import { useMousetrapBind } from '~/hooks/useMousetrapBind';
 
 defineOptions({
   name: 'markdown视图'
 })
 
+const router = useRouter()
 const favoritesStore = useFavorites()
 const { promptAddItem } = favoritesStore
 const { isLoading, directory, title, pathString } = useRenderMarkdown('.container .markdown-content')
@@ -41,6 +44,10 @@ const share = () => {
     url: `https://hymnal.timeic.top/#/${encodeURI(pathString.value)}`
   })
 }
+
+useMousetrapBind({
+  'esc': router.back
+})
 </script>
 
 <style scoped>
@@ -55,7 +62,7 @@ const share = () => {
 
 .markdown-content {
   @apply relative left-0 right-0 m-auto;
-  padding: calc(var(--safe-area-inset-top) + 30px) 8px var(--safe-area-inset-bottom) 8px;
+  padding: calc(var(--safe-area-inset-top) + var(--safe-area-content-top)) 8px var(--safe-area-inset-bottom) 8px;
   max-width: 720px;
   user-select: text;
 }

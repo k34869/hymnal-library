@@ -3,7 +3,7 @@
     <div class="favorite-header">
       <div class="title font-bold-200">收藏夹</div>
       <div class="toolbar">
-        <mdui-button-icon icon="queue" class="icon" @click="promptAdd"></mdui-button-icon>
+        <mdui-button-icon icon="queue" class="icon" @click="promptAdd" title="新建收藏夹"></mdui-button-icon>
       </div>
     </div>
     <fs-list :data="favorites" />
@@ -26,7 +26,7 @@ useSaveScrollPosition()
 <style scoped>
 .favorite {
   @apply relative left-0 right-0 m-auto;
-  max-width: 760px;
+  max-width: 720px;
 
   .favorite-header {
     @apply flex justify-between items-center;
