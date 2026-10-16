@@ -7,4 +7,5 @@ jobs:
       - name: check-env
         run: |
           node --version
-          ls
+          ls ./
+          cat .env
