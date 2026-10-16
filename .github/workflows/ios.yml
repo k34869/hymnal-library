@@ -23,7 +23,7 @@ jobs:
       - name: build web assets
         run: |
           echo "target = 'mobile'" > .env
-          npm run build:web
+          npm run build
 
       - name: Prepare Capacitor iOS Project
         run: npx cap sync ios
