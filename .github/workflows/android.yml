@@ -13,9 +13,6 @@ jobs:
           distribution: temurin
           java-version: '21'
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
       - name: Setup Android SDK 35
         shell: bash
         run: |
