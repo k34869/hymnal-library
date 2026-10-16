@@ -95,25 +95,17 @@
       function getOS() {
         const ua = navigator.userAgent;
 
-        if (/Android/i.test(ua)) return 'Android';
-
-        if (/iPhone|iPad|iPod/i.test(ua)) return 'iOS';
-
-        if (/Windows NT/i.test(ua)) {
-          return 'Windows';
+        if (/Android/i.test(ua)) {
+          return 'Mobile';
+        } else if (/iPhone|iPad|iPod/i.test(ua)) {
+          return 'Mobile';
+        } else if (/Macintosh|Mac OS X/i.test(ua)) {
+          if (navigator.maxTouchPoints > 1) return 'Mobile';
+        } else if (/Mobile/i.test(ua)) {
+          return 'Mobile';
+        } else {
+          return 'Desktop';
         }
-
-        if (/Macintosh|Mac OS X/i.test(ua)) {
-          // iPadOS 可以伪装成 Mac，这里额外判断
-          if (navigator.maxTouchPoints > 1) return 'iOS';
-          return 'macOS';
-        }
-
-        if (/Linux/i.test(platform) || /Linux/i.test(ua)) {
-          return 'Linux';
-        }
-
-        return 'Unknown';
       }
       function $(string) {
         const container = document.createElement('div');
@@ -123,40 +115,16 @@
       }
       const __OS__ = getOS();
       const $download = document.getElementById('download');
-      if (__OS__ === 'Windows') {
-        $download.appendChild(
-          $(
-            '<a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93-win_x64.exe" target="_blank"><p>Windows X64版 下载</p></a>',
-          ),
-        );
-      } else if (__OS__ === 'macOS') {
-        $download.appendChild(
-          $(
-            '<a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93-mac_x64" target="_blank"><p>macOS Intel芯片版 下载</p></a><a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93-mac_arm64" target="_blank"><p>macOS M芯片版 下载</p></a>',
-          ),
-        );
-      } else if (__OS__ === 'Android') {
-        $download.appendChild(
-          $(
-            '<a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93.apk" target="_blank"><p>Android 版 下载</p></a>',
-          ),
-        );
-      } else if (__OS__ === 'iOS') {
-        $download.appendChild(
-          $(
-            '<a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93.ipa" target="_blank"><p>iPhone/iPad 版 下载</p></a>',
-          ),
-        );
-      } else if (__OS__ === 'Linux') {
-        $download.appendChild(
-          $(
-            '<a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93-linux_x64" target="_blank"><p>Linux X64版 下载</p></a><a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93-linux_arm64" target="_blank"><p>Linux Arm64版 下载</p></a><a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93-linux_armhf" target="_blank"><p>Linux Armhf版 下载</p></a>',
-          ),
-        );
-      } else {
+      if (__OS__ === 'Mobile') {
         $download.appendChild(
           $(
             '<a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93.apk" target="_blank"><p>Android 版 下载</p></a><a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93.ipa" target="_blank"><p>iPhone/iPad 版 下载</p></a>',
+          ),
+        );
+      } else if (__OS__ === 'Desktop') {
+        $download.appendChild(
+          $(
+            '<a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93-win_x64.exe" target="_blank"><p>Windows X64版 下载</p></a><a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93-mac_x64" target="_blank"><p>macOS Intel芯片版 下载</p></a><a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93-mac_arm64" target="_blank"><p>macOS M芯片版 下载</p></a><a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93-linux_x64" target="_blank"><p>Linux X64版 下载</p></a><a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93-linux_arm64" target="_blank"><p>Linux Arm64版 下载</p></a><a href="https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/%E8%AF%97%E6%AD%8C%E5%BA%93-linux_armhf" target="_blank"><p>Linux Armhf版 下载</p></a>',
           ),
         );
       }
