@@ -1,0 +1,40 @@
+name: Build Desktop Binary File
+on: workflow_dispatch
+jobs:
+  build_for_macos:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 12
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install Project Dependencies
+        run: pnpm ci
+
+      - name: Build Web Assets
+        run: |
+          echo "target = 'desktop'" > .env
+          npm run build
+
+      - name: Build Desktop 
+        run: |
+          npm run sync-neutralino-version
+          npx neu build --embed-resources
+          tar -cvzf apps.tar.gz ./desktop/dist/hymnal-library/*
+
+      - name: Upload Binary File
+        uses: actions/upload-artifact@v4
+        with:
+          name: hymnal-library-desktop-binarys
+          path: apps.tar.gz
+          if-no-files-found: error
+          retention-days: 7
