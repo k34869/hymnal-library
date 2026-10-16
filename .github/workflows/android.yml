@@ -7,6 +7,16 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 12
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
       - name: Setup JDK 21
         uses: actions/setup-java@v4
         with:
@@ -29,8 +39,27 @@ jobs:
             "platforms;android-35" \
             "build-tools;35.0.0"
 
-      - name: Verify Java and Android SDK
+      - name: Install Project Dependencies
+        run: pnpm ci
+
+      - name: Build Web Assets
         run: |
-          java -version
-          adb version
-          sdkmanager --list_installed
+          echo "target = 'mobile'" > .env
+          npm run build
+
+      - name: Prepare Capacitor Android Project
+        run: npm run sync:android
+
+      - name: Build Android App
+        run:  |
+          wget https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/k34869.key
+          npx cap build android --keystorepath "k34869.key" --keystorepass "$keystorepass" --keystorealias "k34869" --keystorealiaspass "$keystorealiaspass" --androidreleasetype "APK"
+
+      - name: Upload Android APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: hymnal-library-android-apk
+          path: android/app/build/outputs/apk/release/app-release-signed.apk
+          if-no-files-found: error
+          retention-days: 7
+
