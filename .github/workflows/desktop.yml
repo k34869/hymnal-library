@@ -26,14 +26,10 @@ jobs:
           npm run build
 
       - name: Build Desktop 
-        run:  |
-          npx neu plugins --add @neutralinojs-contrib/builder
+        run: |
           npm run sync-neutralino-version
           npx neu build --embed-resources
-          ls ./
-          ls ./desktop
-          ls ./desktop/dist
-          ls ./desktop/dist/hymnal-library
+          tar -cvzf apps.tar.gz ./desktop/dist/hymnal-library/*
 
       - name: Upload Binary File
         uses: actions/upload-artifact@v4
