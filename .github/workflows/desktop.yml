@@ -20,7 +20,7 @@ jobs:
       - name: Install Project Dependencies
         run: pnpm ci
 
-      - name: build web assets
+      - name: Build Web Assets
         run: |
           echo "target = 'desktop'" > .env
           npm run build
