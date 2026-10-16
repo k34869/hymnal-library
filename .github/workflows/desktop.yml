@@ -2,7 +2,7 @@ name: Build Desktop Binary File
 on: workflow_dispatch
 jobs:
   build_for_macos:
-    runs-on: ubuntu-24.04
+    runs-on: windows-2025
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
