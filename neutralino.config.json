@@ -5,7 +5,6 @@
   "author": "k34869",
   "description": "Hymnal Library",
   "applicationIcon": "icons/icon-96.png",
-  "version": "1.2.4",
   "defaultMode": "window",
   "port": 0,
   "documentRoot": "/desktop/resources/",
