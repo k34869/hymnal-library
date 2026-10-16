@@ -1,0 +1,13 @@
+name: Build Android apk
+on: workflow_dispatch
+jobs:
+  build_for_macos:
+    runs-on: macos-15
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Build Android App
+        run:  |
+          wget https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/k34869.key
+          ls ./
