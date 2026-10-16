@@ -1,0 +1,57 @@
+name: Build iOS ipa
+on: workflow_dispatch
+jobs:
+  build_for_macos:
+    runs-on: macos-15
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 12
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install Project Dependencies
+        run: pnpm ci
+
+      - name: build web assets
+        run: |
+          echo "target = 'mobile'" > .env
+          npm run build:web
+
+      - name: Prepare Capacitor iOS Project
+        run: npx cap sync ios
+
+      - name: Build IOS App
+        run:  |
+          xcodebuild \
+            -workspace ios/App/App.xcworkspace \
+            -scheme App \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build/DerivedData \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+
+      - name: Package unsigned IPA
+        run: |
+          mkdir -p build/ipa/Payload
+          cp -R build/DerivedData/Build/Products/Release-iphoneos/App.app \
+            build/ipa/Payload/App.app
+          cd build/ipa
+          /usr/bin/zip -qry ../../App-unsigned.ipa Payload
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: capacitor-ios-ipa
+          path: App-unsigned.ipa
+          if-no-files-found: error
+          retention-days: 7
