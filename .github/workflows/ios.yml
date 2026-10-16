@@ -26,7 +26,7 @@ jobs:
           npm run build
 
       - name: Prepare Capacitor iOS Project
-        run: npx cap sync ios
+        run: npm run sync:ios
 
       - name: Build IOS App
         run:  |
