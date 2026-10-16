@@ -1,9 +1,10 @@
-name: Build Android apk
+name: Build Android signed apk
 on: workflow_dispatch
 jobs:
   build_for_macos:
     runs-on: macos-15
     env:
+      signedkeyurl: ${{ vars.signedkeyurl }}
       keystorepass: ${{ vars.keystorepass }}
       keystorealiaspass: ${{ vars.keystorealiaspass }}
     steps:
@@ -55,7 +56,7 @@ jobs:
 
       - name: Build Android App
         run:  |
-          wget -P android https://mfbt5siz.cn-nb1.rainapp.top/d/Local/k34869.key
+          wget -P android "$signedkeyurl"
           chmod +x ./android/gradlew
           npx cap build android --keystorepath "k34869.key" --keystorepass "$keystorepass" --keystorealias "k34869" --keystorealiaspass "$keystorealiaspass" --androidreleasetype "APK"
 
