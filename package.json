@@ -6,7 +6,6 @@
   "type": "module",
   "scripts": {
     "serve": "vite --host 0.0.0.0",
-    "sync-neutralino-version": "node ./plugins/sync-neutralino-version.mjs",
     "sync": "cap-sync-version && cap sync",
     "sync:android": "cap-sync-version --android && cap sync android",
     "sync:ios": "cap-sync-version --ios && cap sync ios",

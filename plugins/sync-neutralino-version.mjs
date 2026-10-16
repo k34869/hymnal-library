@@ -6,7 +6,7 @@ neutralinoConfigs.version = packages.version;
 neutralinoConfigs.enableInspector = false;
 
 fs.writeFileSync(
-  '../neutralino.config.json',
+  './neutralino.config.json',
   JSON.stringify(neutralinoConfigs, '', 2),
   'utf8',
 );

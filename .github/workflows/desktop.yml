@@ -25,9 +25,9 @@ jobs:
           echo "target = 'desktop'" > .env
           npm run build
 
-      - name: Build Desktop 
+      - name: Build Desktop
         run: |
-          npm run sync-neutralino-version
+          node ./plugins/sync-neutralino-version.mjs
           npx neu build --embed-resources
           tar -cvzf apps.tar.gz ./desktop/dist/hymnal-library/*
 
