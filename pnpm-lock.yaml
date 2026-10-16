@@ -27,8 +27,8 @@ importers:
         specifier: ^7.6.9
         version: 7.6.9(@capacitor/core@7.4.4)
       '@capacitor/share':
-        specifier: ^8.0.0
-        version: 8.0.0(@capacitor/core@7.4.4)
+        specifier: ^7.0.4
+        version: 7.0.4(@capacitor/core@7.4.4)
       flexsearch:
         specifier: ^0.8.212
         version: 0.8.212
@@ -158,10 +158,10 @@ packages:
     peerDependencies:
       '@capacitor/core': ^7.6.0
 
-  '@capacitor/share@8.0.0':
-    resolution: {integrity: sha512-VU+xT4LFwr4keIC0UKDqGQVAiNlAHwoTMQg8wVVSxtn/k32VOvvtqFfu63qnXr40WKytZWrxJfVESvRjd761yg==}
+  '@capacitor/share@7.0.4':
+    resolution: {integrity: sha512-wNXxmXUcChrtbZ5jQv8scFIbIGKo3rk6B7qpWySxfUhYJP5NANgAqQ9Z69m0k/zYsucdh66SBU7XW1ykd9aUug==}
     peerDependencies:
-      '@capacitor/core': '>=8.0.0'
+      '@capacitor/core': '>=7.0.0'
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -2780,7 +2780,7 @@ snapshots:
     dependencies:
       '@capacitor/core': 7.4.4
 
-  '@capacitor/share@8.0.0(@capacitor/core@7.4.4)':
+  '@capacitor/share@7.0.4(@capacitor/core@7.4.4)':
     dependencies:
       '@capacitor/core': 7.4.4
 
