@@ -3,6 +3,9 @@ on: workflow_dispatch
 jobs:
   build_for_macos:
     runs-on: macos-15
+    env:
+      keystorepass: ${{ vars.keystorepass }}
+      keystorealiaspass: ${{ vars.keystorealiaspass }}
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
