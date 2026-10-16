@@ -30,7 +30,7 @@
       "borderless": false,
       "resizable": true,
       "useSavedState": true,
-      "exitProcessOnClose": false,
+      "exitProcessOnClose": true,
       "newWindowPolicy": "browser",
       "injectGlobals": true
     }

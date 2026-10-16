@@ -38,10 +38,6 @@ Neutralino.events.on('trayMenuItemClicked', event => {
   }
 });
 
-Neutralino.events.on('windowClose', () => {
-  Neutralino.app.exit();
-});
-
 Mousetrap.bind('enter', e => {
   if (
     e.target.nodeName === 'MDUI-BUTTON-ICON' ||
