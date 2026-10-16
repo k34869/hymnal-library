@@ -2,7 +2,7 @@ name: Build Desktop Binary File
 on: workflow_dispatch
 jobs:
   build_for_macos:
-    runs-on: macos-15
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
@@ -29,7 +29,10 @@ jobs:
         run:  |
           npm run sync-neutralino-version
           npx neu build --embed-resources
-          tar -cvzf apps.tar.gz desktop/dist/hymnal-library/*
+          ls ./
+          ls ./desktop
+          ls ./desktop/dist
+          tar -cvzf apps.tar.gz desktop/dist/hymnal-library/
 
       - name: Upload Binary File
         uses: actions/upload-artifact@v4
