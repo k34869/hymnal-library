@@ -8,6 +8,4 @@ jobs:
         uses: actions/checkout@v4
       - name: check-env
         run: |
-          node --version
-          ls ./
-          cat .env
+          xcodebuild -version
