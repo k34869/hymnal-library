@@ -27,7 +27,7 @@ jobs:
 
       - name: Build Desktop 
         run:  |
-          neu plugins --add @neutralinojs-contrib/builder
+          npx neu plugins --add @neutralinojs-contrib/builder
           npm run sync-neutralino-version
           npx neu build --embed-resources
           ls ./
