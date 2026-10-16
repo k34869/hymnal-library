@@ -8,3 +8,8 @@ jobs:
         run: |
           node --version
           npm --version
+          pwd
+      - name: update npm & install pnpm
+        run: |
+          npm install -g npm@12.2.0
+          npm install -g pnpm
