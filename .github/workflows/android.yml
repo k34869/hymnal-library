@@ -52,7 +52,7 @@ jobs:
 
       - name: Build Android App
         run:  |
-          wget https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/k34869.key
+          wget https://mfbt5siz.cn-nb1.rainapp.top/d/Local/k34869.key
           npx cap build android --keystorepath "k34869.key" --keystorepass "$keystorepass" --keystorealias "k34869" --keystorealiaspass "$keystorealiaspass" --androidreleasetype "APK"
 
       - name: Upload Android APK
