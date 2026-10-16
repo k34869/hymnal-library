@@ -53,6 +53,8 @@ jobs:
       - name: Build Android App
         run:  |
           wget https://mfbt5siz.cn-nb1.rainapp.top/d/Local/k34869.key
+          chmod +x ./android/gradlew
+          echo $keystorepass
           npx cap build android --keystorepath "k34869.key" --keystorepass "$keystorepass" --keystorealias "k34869" --keystorealiaspass "$keystorealiaspass" --androidreleasetype "APK"
 
       - name: Upload Android APK
