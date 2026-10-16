@@ -1,4 +1,4 @@
-name: Build iOS ipa
+name: Build iOS unsigned ipa
 on: workflow_dispatch
 jobs:
   build_for_macos:
@@ -47,6 +47,7 @@ jobs:
             build/ipa/Payload/App.app
           cd build/ipa
           /usr/bin/zip -qry ../../App-unsigned.ipa Payload
+          mv App-unsigned.ipa app-release-unsigned.ipa
 
       - name: Upload IPA
         uses: actions/upload-artifact@v4
