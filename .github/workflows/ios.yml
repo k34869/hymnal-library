@@ -9,3 +9,11 @@ jobs:
       - name: check-env
         run: |
           xcodebuild -version
+      - name: update node npm & install pnpm
+        run: |
+          npm install -g npm@12.2.0
+          npm install -g @nubjs/nub
+          npm install -g pnpm
+          nub node install 24
+          node --version
+
