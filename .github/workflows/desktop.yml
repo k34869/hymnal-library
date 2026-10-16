@@ -32,7 +32,7 @@ jobs:
           ls ./
           ls ./desktop
           ls ./desktop/dist
-          tar -cvzf apps.tar.gz desktop/dist/hymnal-library/
+          ls ./desktop/dist/hymnal-library
 
       - name: Upload Binary File
         uses: actions/upload-artifact@v4
