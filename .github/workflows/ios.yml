@@ -15,5 +15,7 @@ jobs:
           npm install -g @nubjs/nub
           npm install -g pnpm
           nub node install 24
-          node --version
+          echo $0
+          echo $SHELL
+          ls -a ~
 
