@@ -2,7 +2,7 @@ name: Build iOS ipa
 on: workflow_dispatch
 jobs:
   build_for_macos:
-    runs-on: macos-13
+    runs-on: macos-15
     steps:
       - name: check-env
         run: |
