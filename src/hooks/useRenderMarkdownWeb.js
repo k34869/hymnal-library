@@ -23,6 +23,10 @@ export function useRenderMarkdownWeb(selector) {
   onMounted(() => {
     isLoading.value = false;
     pathString.value = decodeURIComponent(location.hash).replace('#/', '');
+    if (pathString.value === '') {
+      location.href = 'https://hymnal.timeic.top/home.html';
+      return;
+    }
     const pathArray = pathString.value.split('/');
     title.value = pathArray[pathArray.length - 1];
     getMarkdownWeb(pathString.value).then(content => {
