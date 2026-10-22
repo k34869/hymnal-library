@@ -21,11 +21,11 @@ Mousetrap.bind('enter', e => {
   }
   document.activeElement.click();
 });
-let platformEndName;
+
 const ua = navigator.userAgent;
-if (/Android/i.test(ua)) platformEndName = '.apk';
-else if (/iPhone|iPad|iPod/i.test(ua)) platformEndName = '.ipa';
+if (/Android/i.test(ua)) window.platformEndName = '.apk';
+else if (/iPhone|iPad|iPod/i.test(ua)) window.platformEndName = '.ipa';
 else if (/Macintosh|Mac OS X/i.test(ua)) {
-  if (navigator.maxTouchPoints > 1) platformEndName = '.ipa';
-} else platformEndName = '.apk';
-checkUpdate(platformEndName);
+  if (navigator.maxTouchPoints > 1) window.platformEndName = '.ipa';
+} else window.platformEndName = '.apk';
+checkUpdate();

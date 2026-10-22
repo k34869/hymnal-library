@@ -47,7 +47,11 @@ onMounted(() => {
   .buttons {
     padding: 18px 5px 10px 5px;
     display: flex;
-    justify-content:space-between;
+    justify-content: flex-end;
+
+    mdui-button {
+      margin-left: 18px;
+    }
   }
 }
 </style>

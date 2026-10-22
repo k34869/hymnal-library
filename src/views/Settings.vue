@@ -66,6 +66,16 @@
         </div>
       </mdui-list-item>
 
+      <mdui-list-item @click="updateApp">
+        <div slot="custom" class="item">
+          <div class="start">
+            <mdui-icon name='browser_updated' class="icon"></mdui-icon>
+            <div class="name font-bold-200">检查更新</div>
+          </div>
+          <div class="text" :class="{ 'update': isUpdate && isWait === false }">{{ isWait ? '检查中...' : isUpdate ? '有新版可用' : '已是最新版' }}</div>
+        </div>
+      </mdui-list-item>
+
       <mdui-list-item @click="showAboutDialog">
         <div slot="custom" class="item">
           <div class="start">
@@ -90,6 +100,7 @@ import { useSettings } from '~/stores/settings';
 import { dialogStore } from '~/stores/dialog';
 import { clearCache } from '~/stores/cache';
 import { useMousetrapBind } from '~/hooks/useMousetrapBind';
+import { checkUpdate, isWait, isUpdate, openUpdateDialog } from '~/stores/appInfo';
 
 defineOptions({
   name: '设置'
@@ -97,6 +108,14 @@ defineOptions({
 
 const router = useRouter()
 const { isDark, isDarkWithSystem, isScreenAlways, setupPageName } = storeToRefs(useSettings())
+
+const updateApp = () => {
+  if (isUpdate.value) {
+    openUpdateDialog()
+  } else {
+    checkUpdate(true)
+  }
+}
 
 const openSelectSetupPage = () => {
   dialogStore.title = '选择启动页面?'
@@ -140,6 +159,10 @@ useMousetrapBind({
     .text {
       margin-right: 5px;
       font-size: 15px;
+
+      &.update {
+        color: red;
+      }
     }
   }
 

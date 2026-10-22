@@ -65,6 +65,7 @@ useMousetrapBind({
   padding: calc(var(--safe-area-inset-top) + var(--safe-area-content-top)) 8px var(--safe-area-inset-bottom) 8px;
   max-width: 720px;
   user-select: text;
+  padding-bottom: 22px;
 }
 
 .loading {

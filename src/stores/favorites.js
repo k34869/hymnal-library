@@ -69,7 +69,7 @@ export const useFavorites = defineStore(
         value: favorites.value.list[index].name,
       });
       dialogStore.onSubmit = value => {
-        favorites.value.list[index].name = value;
+        if (value) favorites.value.list[index].name = value;
       };
     };
 

@@ -190,7 +190,7 @@ useMousetrapBind({
   'ctrl+backspace': () => {
     toNumber.value = '0'
   },
-  'enter': submit
+  'ctrl+enter': submit
 })
 </script>
 

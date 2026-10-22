@@ -6,7 +6,7 @@ import FavoriteDetail from '~/views/FavoriteDetail.vue';
 import Search from '~/views/Search.vue';
 import Navigation from '~/views/Navigation.vue';
 import MarkdownView from '~/views/MarkdownView.vue';
-import Settings from '~/views/SettingsDesktop.vue';
+import Settings from '~/views/Settings.vue';
 import { applyExclude } from '~/stores/keepAliveExclude';
 
 const routes = [

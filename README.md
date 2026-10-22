@@ -14,7 +14,7 @@
 ## 适配平台
 
 - [x] Android
-- [x] IOS
+- [x] iOS
 - [x] Pad
 - [x] Windows
 - [x] Linux
@@ -22,4 +22,4 @@
 
 ## 下载安装
 
-可以从 [Releases](https://github.com/k34869/hymnal-library/releases) 下载安装，或通过 [Github Action](https://github.com/k34869/hymnal-library/actions) 云端编译构建进行下载安装
+可以从 [Releases](https://github.com/k34869/hymnal-library/releases) 下载安装，或通过 [Github Actions](https://github.com/k34869/hymnal-library/actions) 云端编译构建进行下载安装

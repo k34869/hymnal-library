@@ -6,7 +6,7 @@
     <div class="content">
       <p>软件版本：{{ appInfo.version }}</p>
       <p>作者：k34869</p>
-      <p>邮箱：build17293@gmail.com</p>
+      <p>邮箱：<a href="mailto:build17293@gmail.com">build17293@gmail.com</a></p>
       <p>资料库来源：<a href="https://mygoodland.notion.site/">https://mygoodland.notion.site/</a></p>
       <p>界面风格：Material Design 3</p>
     </div>
