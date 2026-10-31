@@ -1,5 +1,5 @@
 <template>
-  <div class="path-navigation" ref="path-navigation">
+  <div class="path-navigation" ref="pathNavigation">
     <mdui-chip @click="navigationTo(0)">🚩</mdui-chip>
     <template v-for="(path, index) in pathArray">
       <mdui-icon name='arrow_forward_ios' class="path-sep"></mdui-icon>
@@ -12,7 +12,7 @@
 
 <script setup>
 import 'mdui/components/chip.js'
-import { toRefs, onActivated, useTemplateRef } from 'vue'
+import { toRefs, onActivated, shallowRef } from 'vue'
 import { useRouter } from 'vue-router'
 import { stackHistory } from '~/stores/stackLibrary'
 
@@ -25,7 +25,7 @@ const props = defineProps({
 
 const router = useRouter()
 const { pathArray } = toRefs(props)
-const $pageNavigation = useTemplateRef('path-navigation')
+const pathNavigation = shallowRef(null)
 
 const navigationTo = (navNum) => {
   if (pathArray.value.length !== navNum) {
@@ -35,7 +35,7 @@ const navigationTo = (navNum) => {
   }
 }
 
-onActivated(() => $pageNavigation.value.scrollTo({ left: $pageNavigation.value.scrollWidth }))
+onActivated(() => pathNavigation.value.scrollTo({ left: pathNavigation.value.scrollWidth }))
 </script>
 
 <style scoped>

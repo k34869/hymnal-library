@@ -11,7 +11,7 @@
 <script setup>
 import 'mdui/components/button.js';
 import 'mdui/components/text-field.js';
-import { onMounted, useTemplateRef } from 'vue';
+import { onMounted, shallowRef } from 'vue';
 import { dialogStore } from '~/stores/dialog';
 
 defineProps({
@@ -25,16 +25,16 @@ defineProps({
   }
 })
 
-const $input = useTemplateRef('input')
+const input = shallowRef(null)
 
 const submit = () => {
-  dialogStore.onSubmit($input.value.value)
+  dialogStore.onSubmit(input.value.value)
   dialogStore.close()
 }
 
 onMounted(() => {
   setTimeout(() => {
-    $input.value.focus()
+    input.value.focus()
   }, 50);
 })
 </script>

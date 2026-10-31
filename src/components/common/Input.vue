@@ -7,12 +7,12 @@
 
 <script setup>
 import 'mdui/components/text-field.js';
-import { useTemplateRef } from 'vue';
+import { shallowRef } from 'vue';
 
-const $input = useTemplateRef('input')
+const input = shallowRef(null)
 
 const focus = () => {
-  $input.value.focus()
+  input.value.focus()
 }
 
 defineProps({

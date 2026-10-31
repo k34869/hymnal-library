@@ -1,34 +1,36 @@
-import { Document } from "flexsearch";
-import { data } from "../assets/json/db.json";
+import { Document } from 'flexsearch';
+import { data } from '../assets/json/db.json';
 
 const index = new Document({
   document: {
-    id: "id",
-    index: ["name", "description"],
-    store: ["name", "description", "category", "path", "type"],
+    id: 'id',
+    index: ['name', 'description'],
+    store: false,
+    store: ['name', 'description', 'category', 'path', 'type'],
   },
-  tokenize: "full",
-  encode: (str) =>
+  tokenize: 'full',
+  encode: str =>
     str
       .trim()
       .toLowerCase()
       .split(/[\p{Z}\p{S}\p{P}\p{C}]+/u),
-  resolution: 9,
+  resolution: 5,
 });
 
-for (const item of data) {
-  requestIdleCallback(() => {
+requestIdleCallback(() => {
+  for (const item of data) {
     index.add(item);
-  });
-}
+  }
+});
 
-function search(query, field = ["name", "description"], isHighlight = true) {
+function search(query, field = ['name', 'description'], isHighlight = true) {
   const maps = {};
   const results = index.search(query, {
     limit: 24,
     enrich: true,
   });
-  const reg = new RegExp(`(${query})`, "gi");
+
+  const reg = new RegExp(`(${query})`, 'gi');
   for (const item of results) {
     if (field.includes(item.field)) {
       for (const e of item.result) {

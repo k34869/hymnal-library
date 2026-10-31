@@ -5,7 +5,7 @@
       <p>什么都没有?</p>
     </div>
     <template v-else>
-      <mdui-list-item v-for="(item, index) in data.list" @click="open(item)" @contextmenu="openDropdown(index)">
+      <mdui-list-item v-for="(item, index) in data.list" @click="open(item)" @contextmenu="openDropdown">
         <div class="fs-list-item" slot="custom">
           <mdui-icon :name="item.type ? iconMap[item.type] : iconMap[data.type]"></mdui-icon>
           <div class="fs-list-content">
@@ -15,7 +15,7 @@
               v-html="data.type === 'map-favorite' ? `${item.list.length} 项` : item.description"></div>
           </div>
           <mdui-dropdown v-if="item.type ?? data.type !== 'map-folder'" @click.stop>
-            <mdui-button-icon ref="dropdownTrigger" slot="trigger" icon="more_vert"></mdui-button-icon>
+            <mdui-button-icon slot="trigger" icon="more_vert"></mdui-button-icon>
             <mdui-menu>
               <mdui-menu-item @click="open(item)">打开</mdui-menu-item>
               <mdui-menu-item v-if="$route.name !== '收藏'" @click="share(item)">分享</mdui-menu-item>
@@ -42,7 +42,6 @@ import 'mdui/components/button-icon.js';
 import 'mdui/components/dropdown.js';
 import 'mdui/components/menu.js';
 import 'mdui/components/menu-item.js';
-import { useTemplateRef } from 'vue';
 import { useRouter, useRoute, } from 'vue-router';
 import { Share } from '@capacitor/share'
 import { dialogStore } from '~/stores/dialog';
@@ -65,7 +64,6 @@ const route = useRoute()
 const recentStore = useRecent()
 const favoritesStore = useFavorites()
 const { confirmRemove, promptAddItem, removeItem, rename } = favoritesStore
-const $dropdownTrigger = useTemplateRef('dropdownTrigger')
 
 const iconMap = {
   'map-folder': 'folder',
@@ -75,8 +73,8 @@ const iconMap = {
   'map-hyper-link': 'link'
 }
 
-const openDropdown = (index) => 
-  $dropdownTrigger.value[index].click()
+const openDropdown = ($event) => 
+  $event.currentTarget.querySelector('mdui-button-icon[icon=more_vert]').click()
 
 const getPath = (path, name) => {
   let pathString = ''

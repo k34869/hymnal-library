@@ -18,7 +18,7 @@ import 'mdui/components/chip.js';
 import 'mdui/components/tooltip.js';
 import Input from '~/components/common/Input.vue';
 import FsList from '~/components/business/FsList.vue';
-import { ref, watch, onActivated, onDeactivated, useTemplateRef } from 'vue'
+import { ref, watch, onActivated, onDeactivated, shallowRef } from 'vue'
 import { useRouter } from 'vue-router';
 import { search, data } from '~/hooks/useSearch';
 import { uniqueRandoms } from '~/utils/utils';
@@ -27,7 +27,7 @@ import { useRecent } from '~/stores/recent';
 import { currentOpen } from '~/stores/currentOpen';
 import { useMousetrapBind } from '~/hooks/useMousetrapBind';
 
-const $input = useTemplateRef('input')
+const input = shallowRef(null)
 const router = useRouter()
 const recentStore = useRecent()
 let randomRec = ref(uniqueRandoms(0, data.length, 15))
@@ -58,7 +58,7 @@ useSaveScrollPosition()
 useMousetrapBind({
   '/': () => {
     setTimeout(() => {
-      $input.value.focus()
+      input.value.focus()
     }, 20);
   }
 })
