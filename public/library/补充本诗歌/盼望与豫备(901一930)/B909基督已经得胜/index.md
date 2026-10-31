@@ -14,9 +14,9 @@ mp3
 
 ![image-7.jpg](./image-7.jpg)
 
-![9.jpg](./image-7.jpg)
+![9.jpg](./9.jpg)
 
-![8.jpg](./image-7.jpg)
+![8.jpg](./8.jpg)
 
 ![image-10.jpg](./image-10.jpg)
 
