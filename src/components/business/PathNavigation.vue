@@ -40,8 +40,7 @@ onActivated(() => pathNavigation.value.scrollTo({ left: pathNavigation.value.scr
 
 <style scoped>
 .path-navigation {
-  @apply flex items-center overflow-x-scroll font-bold w-full;
-  position: sticky;
+  @apply sticky flex items-center overflow-x-scroll font-bold w-full;
   top: var(--safe-area-inset-top);
   background-color: rgb(var(--mdui-color-surface));
   font-size: 22px;

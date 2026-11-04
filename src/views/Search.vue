@@ -98,8 +98,8 @@ onDeactivated(() => stop)
     top: calc(0px - var(--safe-area-inset-top));
 
     .init {
+      @apply text-center;
       padding: 48px 0;
-      text-align: center;
       color: rgb(var(--mdui-color-on-surface-variant));
 
       .loading {

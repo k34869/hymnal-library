@@ -43,6 +43,6 @@ useMousetrapBind({
 }
 
 .fs-list-bottom-loading {
-  text-align: center;
+  @apply text-center;
 }
 </style>

@@ -61,15 +61,14 @@ useMousetrapBind({
 }
 
 .markdown-content {
-  @apply relative left-0 right-0 m-auto;
+  @apply relative left-0 right-0 m-auto select-text;
   padding: calc(var(--safe-area-inset-top) + var(--safe-area-content-top)) 8px var(--safe-area-inset-bottom) 8px;
   max-width: 720px;
-  user-select: text;
   padding-bottom: 22px;
 }
 
 .loading {
+  @apply text-center;
   padding: 120px 0;
-  text-align: center;
 }
 </style>

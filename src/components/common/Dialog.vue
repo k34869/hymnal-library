@@ -25,7 +25,7 @@ defineOptions({
 
 <style scoped>
 .dialog {
-  user-select: text;
+  @apply select-text;
   transition: all 0.2s;
 
   .button {

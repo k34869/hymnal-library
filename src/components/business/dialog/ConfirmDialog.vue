@@ -33,9 +33,8 @@ const submit = () => {
   }
 
   .buttons {
+    @apply flex justify-end;
     padding: 18px 5px 10px 5px;
-    display: flex;
-    justify-content: flex-end;
 
     mdui-button {
       margin-left: 18px;

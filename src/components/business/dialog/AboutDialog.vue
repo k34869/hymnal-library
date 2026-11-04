@@ -25,7 +25,7 @@ import { appInfo } from '~/stores/appInfo';
 
 <style scoped>
 .logo {
-  text-align: center;
+  @apply text-center;
   padding: 15px 0;
 
   img {
@@ -37,8 +37,8 @@ import { appInfo } from '~/stores/appInfo';
 }
 
 .pay-qr-code {
+  @apply text-center;
   padding: 10px 0;
-  text-align: center;
 
   img {
     @apply w-full h-full;
@@ -47,7 +47,7 @@ import { appInfo } from '~/stores/appInfo';
 }
 
 .content {
-  user-select: text;
+  @apply select-text;
   margin: 12px 10px;
 
   p {

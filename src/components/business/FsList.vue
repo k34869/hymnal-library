@@ -214,7 +214,7 @@ mdui-list-item:has( mdui-dropdown[open]) {
 }
 
 .empty {
-  text-align: center;
+  @apply text-center;
   padding: 28px 0;
   color: rgb(var(--mdui-color-on-surface-variant));
 
@@ -224,11 +224,11 @@ mdui-list-item:has( mdui-dropdown[open]) {
 }
 
 .loading {
+  @apply text-center;
   padding: 20px 0;
-  text-align: center;
 }
 
 .bottom-loading {
-  text-align: center;
+  @apply text-center;
 }
 </style>
