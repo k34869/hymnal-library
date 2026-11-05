@@ -143,6 +143,18 @@ body {
   animation: loading 3.5s infinite linear;
 }
 
+img[src="/resources/transparent.png"] {
+  overflow: hidden;
+  background: linear-gradient(
+    90deg,
+    rgb(var(--mdui-color-surface-container)) 25%,
+    rgb(var(--mdui-color-surface)) 50%,
+    rgb(var(--mdui-color-surface-container)) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 3.5s infinite linear;
+}
+
 .hidden {
   visibility: hidden;
 }

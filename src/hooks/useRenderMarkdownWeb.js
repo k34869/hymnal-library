@@ -3,6 +3,7 @@ import { getMarkdownWeb, getFile } from '~/utils/library';
 import { useMarkedParse } from '~/hooks/useMarkedParse';
 import { useViewPortIn } from './useViewPortIn';
 import { cacheUrl, listenErrorUpdateCache } from '~/stores/cache';
+import { getDom } from '~/utils/dom';
 
 export function useRenderMarkdownWeb(selector) {
   const { viewPortIn } = useViewPortIn();
@@ -13,11 +14,28 @@ export function useRenderMarkdownWeb(selector) {
   const directory = ref('');
   const title = ref('');
 
-  const loadImage = (el, elp, url) => {
+  const loadImageEnd = (el, elp, url) => {
     elp.setAttribute('data-src', url);
-    elp.classList.remove('skeleton');
-    el.setAttribute('src', url);
-    el.classList.remove('hidden');
+    el.src = url;
+  };
+
+  const loadImage = (el, elp, src, beforeHook) => {
+    const cacheTargetUrl =
+      cacheUrl.value[`/hymnal-library/${pathString.value}/${src}`];
+    if (cacheTargetUrl) {
+      if (beforeHook) beforeHook(cacheTargetUrl);
+      loadImageEnd(el, elp, cacheTargetUrl);
+    } else {
+      getFile(`/hymnal-library/${pathString.value}/${src}`).then(
+        ({ raw_url }) => {
+          if (beforeHook) beforeHook(raw_url);
+          loadImageEnd(el, elp, raw_url);
+          cacheUrl.value[`/hymnal-library/${pathString.value}/${src}`] =
+            raw_url;
+        },
+      );
+    }
+    listenErrorUpdateCache(el, `/hymnal-library/${pathString.value}/${src}`);
   };
 
   onMounted(() => {
@@ -30,6 +48,7 @@ export function useRenderMarkdownWeb(selector) {
     const pathArray = pathString.value.split('/');
     title.value = pathArray[pathArray.length - 1];
     getMarkdownWeb(pathString.value).then(content => {
+      let observer = null;
       document.title = `${title.value} - ${pathArray[0]}`;
       directory.value = pathString.value.replace(title.value, '');
       const html = markedParse({
@@ -38,36 +57,21 @@ export function useRenderMarkdownWeb(selector) {
       });
       elements.value = html;
       isLoading.value = true;
-      viewPortIn(html.querySelectorAll('img, video'), (entry, observer) => {
+      observer = viewPortIn(html.querySelectorAll('img, video'), entry => {
         const el = entry.target;
         const elp = el.nodeName === 'VIDEO' ? el : el.parentNode;
-        const src = elp.getAttribute('data-src');
+        const src =
+          el.nodeName === 'VIDEO'
+            ? elp.getAttribute('data-src')
+            : elp.getAttribute('target-src');
         if (!/(http:\/\/|https:\/\/|:\/\/)/.test(src)) {
           if (el.nodeName === 'VIDEO') {
             const { href } = new URL(
               `https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/${pathString.value}/${src}`,
             );
-            el.setAttribute('src', href);
+            el.src = href;
           } else {
-            if (cacheUrl.value[`/hymnal-library/${pathString.value}/${src}`]) {
-              loadImage(
-                el,
-                elp,
-                cacheUrl.value[`/hymnal-library/${pathString.value}/${src}`],
-              );
-            } else {
-              getFile(`/hymnal-library/${pathString.value}/${src}`).then(
-                ({ raw_url }) => {
-                  loadImage(el, elp, raw_url);
-                  cacheUrl.value[`/hymnal-library/${pathString.value}/${src}`] =
-                    raw_url;
-                },
-              );
-            }
-            listenErrorUpdateCache(
-              el,
-              `/hymnal-library/${pathString.value}/${src}`,
-            );
+            loadImage(el, elp, src);
           }
         }
         observer.unobserve(entry.target);
@@ -76,12 +80,12 @@ export function useRenderMarkdownWeb(selector) {
         const src = el.getAttribute('data-src');
         const lazyMedia = () => {
           el.removeEventListener('play', lazyMedia);
-          el.setAttribute('src', '');
-          el.setAttribute('src', '/resources/silent.mp3');
+          el.src = '';
+          el.src = '/resources/silent.mp3';
           const { href } = new URL(
             `https://mfbt5siz.cn-nb1.rainapp.top/d/hymnal-library/${pathString.value}/${src}`,
           );
-          el.setAttribute('src', href);
+          el.src = href;
           el.play();
         };
         if (!/(http:\/\/|https:\/\/|:\/\/)/.test(src)) {
@@ -90,6 +94,46 @@ export function useRenderMarkdownWeb(selector) {
       }
       document.querySelector(selector).appendChild(html);
       Fancybox.bind('[data-fancybox="gallery"]', {
+        on: {
+          'Carousel.change': fancybox => {
+            const slide = fancybox.getSlide();
+            if (slide.thumbSrc === '/resources/transparent.png') {
+              loadImage(
+                slide.thumbEl,
+                slide.triggerEl,
+                slide.triggerEl.getAttribute('target-src'),
+                url => {
+                  const imgLoadHandler = () => {
+                    const naturalWidth = slide.thumbEl.naturalWidth;
+                    const naturalHeight = slide.thumbEl.naturalHeight;
+                    getDom(slide.el, '.f-panzoom__wrapper').then($wrapper => {
+                      $wrapper.style.aspectRatio = `${naturalWidth / naturalHeight} / 1`;
+                      $wrapper.width = naturalWidth;
+                      $wrapper.height = naturalHeight;
+                      const $imgLazyloaded =
+                        $wrapper.querySelector('img.is-lazyloaded');
+                      $imgLazyloaded.width = naturalWidth;
+                      $imgLazyloaded.height = naturalHeight;
+                      $imgLazyloaded.src = url;
+                      const $fViewport = $wrapper.querySelector(
+                        '.f-panzoom__viewport',
+                      );
+                      $fViewport.style.height = `${(naturalHeight / naturalWidth) * $fViewport.style.width.replace('px', '')}px`;
+                      $fViewport.querySelector('img').src = url;
+                      document.querySelector(
+                        `.fancybox__dialog .f-thumbs .f-thumbs__slide[index="${slide.index}"] img`,
+                      ).src = url;
+                    });
+                    slide.thumbSrc = url;
+                    slide.thumbEl.removeEventListener('load', imgLoadHandler);
+                  };
+                  slide.thumbEl.addEventListener('load', imgLoadHandler);
+                  observer.unobserve(slide.thumbEl);
+                },
+              );
+            }
+          },
+        },
         placeFocusBack: false,
         Carousel: {
           Thumbs: true,

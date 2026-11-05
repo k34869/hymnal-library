@@ -1,4 +1,4 @@
-import { onBeforeRouteLeave } from "vue-router";
+import { onBeforeRouteLeave } from 'vue-router';
 
 export function useViewPortIn() {
   let observer;
@@ -9,13 +9,13 @@ export function useViewPortIn() {
     callback,
     options = {
       root: null,
-      rootMargin: "0px",
+      rootMargin: '0px',
       threshold: 0.1,
-    }
+    },
   ) {
     els = elements;
-    observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
+    observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
           callback(entry, observer);
         }

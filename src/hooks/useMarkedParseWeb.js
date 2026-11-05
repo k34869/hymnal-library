@@ -6,9 +6,9 @@ export function useMarkedParse() {
     const renderer = {
       image({ href, text, title }) {
         let url = href;
-        return `<a class="skeleton" data-fancybox="gallery" data-src="${url}" ${
+        return `<a data-fancybox="gallery" target-src="${url}" data-src="/resources/transparent.png" ${
           title ? 'title="' + title + '"' : ''
-        }><img src="" alt="${text}" class="image hidden" /></a>`;
+        }><img src="/resources/transparent.png" alt="${text}" class="image" /></a>`;
       },
     };
 
