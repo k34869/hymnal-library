@@ -1,7 +1,7 @@
 name: Build Desktop Binary File
 on: workflow_dispatch
 jobs:
-  build_for_macos:
+  build_desktop:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout source

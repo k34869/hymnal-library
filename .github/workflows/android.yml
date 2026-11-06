@@ -1,7 +1,7 @@
 name: Build Android signed apk
 on: workflow_dispatch
 jobs:
-  build_for_macos:
+  build_android:
     runs-on: macos-15
     env:
       signedkeyurl: ${{ vars.signedkeyurl }}
@@ -55,7 +55,7 @@ jobs:
         run: npm run sync:android
 
       - name: Build Android App
-        run:  |
+        run: |
           wget -P android "$signedkeyurl"
           chmod +x ./android/gradlew
           npx cap build android --keystorepath "k34869.key" --keystorepass "$keystorepass" --keystorealias "k34869" --keystorealiaspass "$keystorealiaspass" --androidreleasetype "APK"
@@ -67,4 +67,3 @@ jobs:
           path: android/app/build/outputs/apk/release/app-release-signed.apk
           if-no-files-found: error
           retention-days: 7
-

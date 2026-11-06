@@ -1,7 +1,7 @@
 name: Build iOS unsigned ipa
 on: workflow_dispatch
 jobs:
-  build_for_macos:
+  build_ios:
     runs-on: macos-15
     steps:
       - name: Checkout source
@@ -29,7 +29,7 @@ jobs:
         run: npm run sync:ios
 
       - name: Build IOS App
-        run:  |
+        run: |
           xcodebuild \
             -workspace ios/App/App.xcworkspace \
             -scheme App \
